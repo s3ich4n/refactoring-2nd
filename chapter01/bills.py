@@ -25,7 +25,6 @@ def statement(invoice, plays):
         """
         result = 0
 
-        # see also: https://peps.python.org/pep-0636/
         match play["type"]:
             case "tragedy":
                 result = 40000
@@ -51,19 +50,14 @@ def statement(invoice, plays):
     format = lambda x: locale.currency(x, grouping=True)
 
     for perf in invoice[0]["performances"]:
-        play = play_for(perf)
-        this_amount = 0
-
-        # Replaced switch because python does not support switch case.
-        # I prefer to use pattern matching(PEP 636)
-        this_amount = amount_for(perf, play)
+        this_amount = amount_for(perf, play_for(perf))
 
         volume_credits += max(perf["audience"] - 30, 0)
 
-        if "comedy" == play["type"]:
+        if "comedy" == play_for(perf)["type"]:
             volume_credits += floor(perf["audience"] / 5)
 
-        result += f" {play['name']}: {format(this_amount / 100)} {perf['audience']}석\n"
+        result += f" {play_for(perf)['name']}: {format(this_amount / 100)} {perf['audience']}석\n"
         total_amount += this_amount
 
     result += f"총액: {format(total_amount / 100)}\n"
