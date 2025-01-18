@@ -10,7 +10,7 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
-    def apple_sauce():
+    def total_amount():
         total_amount = 0
         for perf in invoice[0]["performances"]:
             total_amount += amount_for(perf)
@@ -72,9 +72,7 @@ def statement(invoice, plays):
             f" {play_for(perf)['name']}: {usd(amount_for(perf))} {perf['audience']}석\n"
         )
 
-    total_amount = apple_sauce()
-
-    result += f"총액: {usd(total_amount)}\n"
+    result += f"총액: {usd(total_amount())}\n"
     result += f"적립 포인트: {total_volume_credits()}점\n"
 
     return result
