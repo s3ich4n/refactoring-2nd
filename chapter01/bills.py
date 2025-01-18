@@ -10,6 +10,15 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    def volume_credits_for(a_performance):
+        result = 0
+        result += max(a_performance["audience"] - 30, 0)
+
+        if "comedy" == a_performance["play"]["type"]:
+            result += floor(a_performance["audience"] / 5)
+
+        return result
+
     def amount_for(a_performance):
         """calculate amount for a play.
 
@@ -47,6 +56,7 @@ def statement(invoice, plays):
         result = performance.copy()  # shallow copy
         result["play"] = play_for(result)
         result["amount"] = amount_for(result)
+        result["volume_credits"] = volume_credits_for(result)
         return result
 
     statement_data = {
@@ -70,16 +80,7 @@ def render_plain_text(data):
     def total_volume_credits():
         result = 0
         for perf in data["performances"]:
-            result += volume_credits_for(perf)
-        return result
-
-    def volume_credits_for(a_performance):
-        result = 0
-        result += max(a_performance["audience"] - 30, 0)
-
-        if "comedy" == a_performance["play"]["type"]:
-            result += floor(a_performance["audience"] / 5)
-
+            result += perf["volume_credits"]
         return result
 
     def usd(a_number):
