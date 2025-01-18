@@ -32,13 +32,13 @@ def render_plain_text(data, plays):
         return result
 
     def volume_credits_for(a_performance):
-        volume_credits = 0
-        volume_credits += max(a_performance["audience"] - 30, 0)
+        result = 0
+        result += max(a_performance["audience"] - 30, 0)
 
         if "comedy" == play_for(a_performance)["type"]:
-            volume_credits += floor(a_performance["audience"] / 5)
+            result += floor(a_performance["audience"] / 5)
 
-        return volume_credits
+        return result
 
     def usd(a_number):
         locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
