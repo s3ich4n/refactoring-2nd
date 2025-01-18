@@ -67,10 +67,8 @@ def statement(invoice, plays):
         )
         total_amount += amount_for(perf)
 
-    volume_credits = total_volume_credits()
-
     result += f"총액: {usd(total_amount)}\n"
-    result += f"적립 포인트: {volume_credits}점\n"
+    result += f"적립 포인트: {total_volume_credits()}점\n"
 
     return result
 
