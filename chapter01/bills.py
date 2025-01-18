@@ -10,10 +10,11 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
-    return render_plain_text(invoice, plays)
+    statement_data = {}
+    return render_plain_text(statement_data, invoice, plays)
 
 
-def render_plain_text(invoice, plays):
+def render_plain_text(data, invoice, plays):
     def total_amount():
         result = 0
         for perf in invoice[0]["performances"]:
@@ -35,6 +36,10 @@ def render_plain_text(invoice, plays):
             volume_credits += floor(a_performance["audience"] / 5)
 
         return volume_credits
+
+    def usd(a_number):
+        locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+        return locale.currency(a_number / 100, grouping=True)
 
     def play_for(a_performance):
         return plays[a_performance["playID"]]
@@ -77,11 +82,6 @@ def render_plain_text(invoice, plays):
     result += f"총액: {usd(total_amount())}\n"
     result += f"적립 포인트: {total_volume_credits()}점\n"
     return result
-
-
-def usd(a_number):
-    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-    return locale.currency(a_number / 100, grouping=True)
 
 
 if __name__ == "__main__":
