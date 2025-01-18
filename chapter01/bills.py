@@ -25,7 +25,7 @@ def statement(invoice, plays):
         """
         result = 0
 
-        match play["type"]:
+        match play_for(a_performance)["type"]:
             case "tragedy":
                 result = 40000
                 if a_performance["audience"] > 30:
@@ -39,7 +39,8 @@ def statement(invoice, plays):
                 result += 300 * a_performance["audience"]
 
             case _:
-                raise Exception(f"알 수 없는 장르: {a_performance['type']}")
+                raise Exception(f"알 수 없는 장르: {play_for(a_performance)['type']}")
+
         return result
 
     total_amount = 0
