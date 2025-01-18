@@ -56,20 +56,22 @@ def statement(invoice, plays):
     volume_credits = 0
     result = f"청구 내역 (고객명: {invoice[0]['customer']})\n"
 
-    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
-    format = lambda x: locale.currency(x, grouping=True)
-
     for perf in invoice[0]["performances"]:
         volume_credits += volume_credits_for(perf)
 
         # this_amount를 인라인
-        result += f" {play_for(perf)['name']}: {format(amount_for(perf) / 100)} {perf['audience']}석\n"
+        result += f" {play_for(perf)['name']}: {usd(amount_for(perf) / 100)} {perf['audience']}석\n"
         total_amount += amount_for(perf)
 
-    result += f"총액: {format(total_amount / 100)}\n"
+    result += f"총액: {usd(total_amount / 100)}\n"
     result += f"적립 포인트: {volume_credits}점\n"
 
     return result
+
+
+def usd(a_number):
+    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
+    return locale.currency(a_number, grouping=True)
 
 
 if __name__ == "__main__":
