@@ -10,6 +10,12 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    def total_volume_credits():
+        volume_credits = 0
+        for perf in invoice[0]["performances"]:
+            volume_credits += volume_credits_for(perf)
+        return volume_credits
+
     def volume_credits_for(a_performance):
         volume_credits = 0
         volume_credits += max(a_performance["audience"] - 30, 0)
@@ -61,9 +67,7 @@ def statement(invoice, plays):
         )
         total_amount += amount_for(perf)
 
-    volume_credits = 0
-    for perf in invoice[0]["performances"]:
-        volume_credits += volume_credits_for(perf)
+    volume_credits = total_volume_credits()
 
     result += f"총액: {usd(total_amount)}\n"
     result += f"적립 포인트: {volume_credits}점\n"
