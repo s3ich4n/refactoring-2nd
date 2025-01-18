@@ -11,17 +11,17 @@ with open("invoices.json", "r") as f:
 
 def statement(invoice, plays):
     def total_amount():
-        total_amount = 0
+        result = 0
         for perf in invoice[0]["performances"]:
-            total_amount += amount_for(perf)
+            result += amount_for(perf)
 
-        return total_amount
+        return result
 
     def total_volume_credits():
-        volume_credits = 0
+        result = 0
         for perf in invoice[0]["performances"]:
-            volume_credits += volume_credits_for(perf)
-        return volume_credits
+            result += volume_credits_for(perf)
+        return result
 
     def volume_credits_for(a_performance):
         volume_credits = 0
