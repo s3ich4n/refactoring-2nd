@@ -10,14 +10,25 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    def play_for(a_performance):
+        return plays[a_performance["playID"]]
+
+    def enrich_performance(performance):
+        result = performance.copy()  # shallow copy
+        result["play"] = play_for(result)
+        return result
+
     statement_data = {
         "customer": invoice[0]["customer"],
-        "performances": invoice[0]["performances"].copy(),  # shallow copy
+        "performances": [
+            enrich_performance(performance)
+            for performance in invoice[0]["performances"]
+        ],
     }
-    return render_plain_text(statement_data, plays)
+    return render_plain_text(statement_data)
 
 
-def render_plain_text(data, plays):
+def render_plain_text(data):
     def total_amount():
         result = 0
         for perf in data["performances"]:
@@ -35,7 +46,7 @@ def render_plain_text(data, plays):
         result = 0
         result += max(a_performance["audience"] - 30, 0)
 
-        if "comedy" == play_for(a_performance)["type"]:
+        if "comedy" == a_performance["play"]["type"]:
             result += floor(a_performance["audience"] / 5)
 
         return result
@@ -43,9 +54,6 @@ def render_plain_text(data, plays):
     def usd(a_number):
         locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
         return locale.currency(a_number / 100, grouping=True)
-
-    def play_for(a_performance):
-        return plays[a_performance["playID"]]
 
     def amount_for(a_performance):
         """calculate amount for a play.
@@ -59,7 +67,7 @@ def render_plain_text(data, plays):
         """
         result = 0
 
-        match play_for(a_performance)["type"]:
+        match a_performance["play"]["type"]:
             case "tragedy":
                 result = 40000
                 if a_performance["audience"] > 30:
@@ -73,14 +81,14 @@ def render_plain_text(data, plays):
                 result += 300 * a_performance["audience"]
 
             case _:
-                raise Exception(f"알 수 없는 장르: {play_for(a_performance)['type']}")
+                raise Exception(f"알 수 없는 장르: {data["play"]['type']}")
 
         return result
 
     result = f"청구 내역 (고객명: {data['customer']})\n"
     for perf in data["performances"]:
         result += (
-            f" {play_for(perf)['name']}: {usd(amount_for(perf))} {perf['audience']}석\n"
+            f" {perf['play']['name']}: {usd(amount_for(perf))} {perf['audience']}석\n"
         )
     result += f"총액: {usd(total_amount())}\n"
     result += f"적립 포인트: {total_volume_credits()}점\n"
