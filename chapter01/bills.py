@@ -10,6 +10,10 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    return render_plain_text(create_statement_data(invoice, plays))
+
+
+def create_statement_data(invoice, plays):
     def total_amount(data):
         return sum(perf["amount"] for perf in data)
 
@@ -64,15 +68,13 @@ def statement(invoice, plays):
     performances = [
         enrich_performance(performance) for performance in invoice[0]["performances"]
     ]
-
     statement_data = {
         "customer": invoice[0]["customer"],
         "performances": performances,
         "total_amount": total_amount(performances),
         "total_volume_credits": total_volume_credits(performances),
     }
-
-    return render_plain_text(statement_data)
+    return statement_data
 
 
 def render_plain_text(data):
