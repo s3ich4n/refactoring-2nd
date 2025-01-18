@@ -10,6 +10,9 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    def play_for(a_performance):
+        return plays[a_performance["playID"]]
+
     def amount_for(a_performance, play):
         """calculate amount for a play.
 
@@ -48,7 +51,7 @@ def statement(invoice, plays):
     format = lambda x: locale.currency(x, grouping=True)
 
     for perf in invoice[0]["performances"]:
-        play = plays[perf["playID"]]
+        play = play_for(perf)
         this_amount = 0
 
         # Replaced switch because python does not support switch case.
