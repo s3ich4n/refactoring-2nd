@@ -10,12 +10,12 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
-    def volume_credits_for(perf):
+    def volume_credits_for(a_performance):
         volume_credits = 0
-        volume_credits += max(perf["audience"] - 30, 0)
+        volume_credits += max(a_performance["audience"] - 30, 0)
 
-        if "comedy" == play_for(perf)["type"]:
-            volume_credits += floor(perf["audience"] / 5)
+        if "comedy" == play_for(a_performance)["type"]:
+            volume_credits += floor(a_performance["audience"] / 5)
 
         return volume_credits
 
