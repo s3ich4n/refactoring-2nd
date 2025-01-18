@@ -12,20 +12,21 @@ with open("invoices.json", "r") as f:
 def statement(invoice, plays):
     statement_data = {}
     statement_data["customer"] = invoice[0]["customer"]
-    return render_plain_text(statement_data, invoice, plays)
+    statement_data["performances"] = invoice[0]["performances"]
+    return render_plain_text(statement_data, plays)
 
 
-def render_plain_text(data, invoice, plays):
+def render_plain_text(data, plays):
     def total_amount():
         result = 0
-        for perf in invoice[0]["performances"]:
+        for perf in data["performances"]:
             result += amount_for(perf)
 
         return result
 
     def total_volume_credits():
         result = 0
-        for perf in invoice[0]["performances"]:
+        for perf in data["performances"]:
             result += volume_credits_for(perf)
         return result
 
@@ -76,7 +77,7 @@ def render_plain_text(data, invoice, plays):
         return result
 
     result = f"청구 내역 (고객명: {data['customer']})\n"
-    for perf in invoice[0]["performances"]:
+    for perf in data["performances"]:
         result += (
             f" {play_for(perf)['name']}: {usd(amount_for(perf))} {perf['audience']}석\n"
         )
