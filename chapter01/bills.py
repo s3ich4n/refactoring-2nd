@@ -10,9 +10,10 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
-    statement_data = {}
-    statement_data["customer"] = invoice[0]["customer"]
-    statement_data["performances"] = invoice[0]["performances"]
+    statement_data = {
+        "customer": invoice[0]["customer"],
+        "performances": invoice[0]["performances"].copy(),  # shallow copy
+    }
     return render_plain_text(statement_data, plays)
 
 
