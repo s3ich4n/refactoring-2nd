@@ -13,7 +13,7 @@ def statement(invoice, plays):
     def play_for(a_performance):
         return plays[a_performance["playID"]]
 
-    def amount_for(a_performance, play):
+    def amount_for(a_performance):
         """calculate amount for a play.
 
         I also put this method as a nested function
@@ -51,7 +51,7 @@ def statement(invoice, plays):
     format = lambda x: locale.currency(x, grouping=True)
 
     for perf in invoice[0]["performances"]:
-        this_amount = amount_for(perf, play_for(perf))
+        this_amount = amount_for(perf)
 
         volume_credits += max(perf["audience"] - 30, 0)
 
