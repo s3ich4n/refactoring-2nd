@@ -3,7 +3,7 @@ from textwrap import dedent
 
 import pytest
 
-from chapter01.bills import statement
+from chapter01.statements import statement
 
 
 @pytest.fixture
