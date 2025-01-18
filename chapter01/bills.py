@@ -51,15 +51,14 @@ def statement(invoice, plays):
     format = lambda x: locale.currency(x, grouping=True)
 
     for perf in invoice[0]["performances"]:
-        this_amount = amount_for(perf)
-
         volume_credits += max(perf["audience"] - 30, 0)
 
         if "comedy" == play_for(perf)["type"]:
             volume_credits += floor(perf["audience"] / 5)
 
-        result += f" {play_for(perf)['name']}: {format(this_amount / 100)} {perf['audience']}석\n"
-        total_amount += this_amount
+        # this_amount를 인라인
+        result += f" {play_for(perf)['name']}: {format(amount_for(perf) / 100)} {perf['audience']}석\n"
+        total_amount += amount_for(perf)
 
     result += f"총액: {format(total_amount / 100)}\n"
     result += f"적립 포인트: {volume_credits}점\n"
