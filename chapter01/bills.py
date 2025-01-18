@@ -53,7 +53,6 @@ def statement(invoice, plays):
         return result
 
     total_amount = 0
-    volume_credits = 0
     result = f"청구 내역 (고객명: {invoice[0]['customer']})\n"
 
     for perf in invoice[0]["performances"]:
@@ -62,6 +61,7 @@ def statement(invoice, plays):
         )
         total_amount += amount_for(perf)
 
+    volume_credits = 0
     for perf in invoice[0]["performances"]:
         volume_credits += volume_credits_for(perf)
 
