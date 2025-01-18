@@ -10,6 +10,15 @@ with open("invoices.json", "r") as f:
 
 
 def statement(invoice, plays):
+    def volume_credits_for(perf):
+        volume_credits = 0
+        volume_credits += max(perf["audience"] - 30, 0)
+
+        if "comedy" == play_for(perf)["type"]:
+            volume_credits += floor(perf["audience"] / 5)
+
+        return volume_credits
+
     def play_for(a_performance):
         return plays[a_performance["playID"]]
 
@@ -51,10 +60,7 @@ def statement(invoice, plays):
     format = lambda x: locale.currency(x, grouping=True)
 
     for perf in invoice[0]["performances"]:
-        volume_credits += max(perf["audience"] - 30, 0)
-
-        if "comedy" == play_for(perf)["type"]:
-            volume_credits += floor(perf["audience"] / 5)
+        volume_credits += volume_credits_for(perf)
 
         # this_amount를 인라인
         result += f" {play_for(perf)['name']}: {format(amount_for(perf) / 100)} {perf['audience']}석\n"
