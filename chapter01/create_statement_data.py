@@ -10,14 +10,20 @@ class PerformanceCalculator:
         self.a_performance = a_performance
         self.a_play = a_play
 
+    @classmethod
+    def create(cls, a_performance, a_play):
+        if a_play["type"] == "tragedy":
+            return TragedyCalculator(a_performance, a_play)
+        elif a_play["type"] == "comedy":
+            return ComedyCalculator(a_performance, a_play)
+        return cls(a_performance, a_play)
+
     def amount(self):
         result = 0
 
         match self.a_play["type"]:
             case "tragedy":
-                result = 40000
-                if self.a_performance["audience"] > 30:
-                    result += 1000 * (self.a_performance["audience"] - 30)
+                raise TypeError("Use TragedyCalculator instead")
 
             case "comedy":
                 result = 30000
@@ -39,6 +45,18 @@ class PerformanceCalculator:
             result += floor(self.a_performance["audience"] / 5)
 
         return result
+
+
+class TragedyCalculator(PerformanceCalculator):
+    def amount(self):
+        result = 40000
+
+        if self.a_performance["audience"] > 30:
+            result += 1000 * (self.a_performance["audience"] - 30)
+
+
+class ComedyCalculator(PerformanceCalculator):
+    pass
 
 
 def create_statement_data(invoice, plays):
