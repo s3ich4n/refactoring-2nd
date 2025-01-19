@@ -2,9 +2,34 @@ from math import floor
 
 
 class PerformanceCalculator:
-    def __init__(self, a_performance, a_play):
+    def __init__(
+        self,
+        a_performance,
+        a_play,
+    ):
         self.a_performance = a_performance
         self.play = a_play
+
+    def amount(self):
+        result = 0
+
+        match self.play["type"]:
+            case "tragedy":
+                result = 40000
+                if self.a_performance["audience"] > 30:
+                    result += 1000 * (self.a_performance["audience"] - 30)
+
+            case "comedy":
+                result = 30000
+                if self.a_performance["audience"] > 20:
+                    result += 10000 + 500 * (self.a_performance["audience"] - 20)
+
+                result += 300 * self.a_performance["audience"]
+
+            case _:
+                raise Exception(f"알 수 없는 장르: {self.play['type']}")
+
+        return result
 
 
 def create_statement_data(invoice, plays):
