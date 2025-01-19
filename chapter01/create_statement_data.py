@@ -19,23 +19,7 @@ class PerformanceCalculator:
         return cls(a_performance, a_play)
 
     def amount(self):
-        result = 0
-
-        match self.a_play["type"]:
-            case "tragedy":
-                raise TypeError("Use TragedyCalculator instead")
-
-            case "comedy":
-                result = 30000
-                if self.a_performance["audience"] > 20:
-                    result += 10000 + 500 * (self.a_performance["audience"] - 20)
-
-                result += 300 * self.a_performance["audience"]
-
-            case _:
-                raise Exception(f"알 수 없는 장르: {self.a_play['type']}")
-
-        return result
+        raise NotImplementedError("Need to implement amount method into subclasses")
 
     def volume_credits(self):
         result = 0
@@ -56,7 +40,12 @@ class TragedyCalculator(PerformanceCalculator):
 
 
 class ComedyCalculator(PerformanceCalculator):
-    pass
+    def amount(self):
+        result = 30000
+        if self.a_performance["audience"] > 20:
+            result += 10000 + 500 * (self.a_performance["audience"] - 20)
+
+        result += 300 * self.a_performance["audience"]
 
 
 def create_statement_data(invoice, plays):
