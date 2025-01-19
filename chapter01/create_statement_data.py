@@ -48,36 +48,6 @@ def create_statement_data(invoice, plays):
     def total_volume_credits(data):
         return sum(perf["volume_credits"] for perf in data)
 
-    def volume_credits_for(a_performance):
-        result = 0
-        result += max(a_performance["audience"] - 30, 0)
-
-        if "comedy" == a_performance["play"]["type"]:
-            result += floor(a_performance["audience"] / 5)
-
-        return result
-
-    def amount_for(a_performance):
-        result = 0
-
-        match a_performance["play"]["type"]:
-            case "tragedy":
-                result = 40000
-                if a_performance["audience"] > 30:
-                    result += 1000 * (a_performance["audience"] - 30)
-
-            case "comedy":
-                result = 30000
-                if a_performance["audience"] > 20:
-                    result += 10000 + 500 * (a_performance["audience"] - 20)
-
-                result += 300 * a_performance["audience"]
-
-            case _:
-                raise Exception(f"알 수 없는 장르: {a_performance['type']}")
-
-        return result
-
     def play_for(a_performance):
         return plays[a_performance["playID"]]
 
