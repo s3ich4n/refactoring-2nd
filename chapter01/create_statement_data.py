@@ -19,16 +19,10 @@ class PerformanceCalculator:
         return cls(a_performance, a_play)
 
     def amount(self):
-        raise NotImplementedError("Need to implement amount method into subclasses")
+        raise NotImplementedError()
 
     def volume_credits(self):
-        result = 0
-        result += max(self.a_performance["audience"] - 30, 0)
-
-        if "comedy" == self.a_play["type"]:
-            result += floor(self.a_performance["audience"] / 5)
-
-        return result
+        return max(self.a_performance["audience"] - 30, 0)
 
 
 class TragedyCalculator(PerformanceCalculator):
@@ -38,6 +32,8 @@ class TragedyCalculator(PerformanceCalculator):
         if self.a_performance["audience"] > 30:
             result += 1000 * (self.a_performance["audience"] - 30)
 
+        return result
+
 
 class ComedyCalculator(PerformanceCalculator):
     def amount(self):
@@ -46,6 +42,11 @@ class ComedyCalculator(PerformanceCalculator):
             result += 10000 + 500 * (self.a_performance["audience"] - 20)
 
         result += 300 * self.a_performance["audience"]
+
+        return result
+
+    def volume_credits(self):
+        return super().volume_credits() + floor(self.a_performance["audience"] / 5)
 
 
 def create_statement_data(invoice, plays):
@@ -64,13 +65,13 @@ def create_statement_data(invoice, plays):
         :param a_performance:
         :return:
         """
-        calc = PerformanceCalculator(a_performance, play_for(a_performance))
+        calc = PerformanceCalculator.create(a_performance, play_for(a_performance))
         result = a_performance.copy()  # shallow copy
 
         result["play"] = calc.a_play
         result["amount"] = calc.amount()
         result["volume_credits"] = calc.volume_credits()
-        return result  # total_amount와 total_volume_credits 제거
+        return result
 
     performances = [
         enrich_performance(performance) for performance in invoice[0]["performances"]
