@@ -57,7 +57,7 @@ def create_statement_data(invoice, plays):
         print(calc)
         result = a_performance.copy()  # shallow copy
 
-        result["play"] = play_for(result)
+        result["play"] = calc.play
         result["amount"] = amount_for(result)
         result["volume_credits"] = volume_credits_for(result)
         return result  # total_amount와 total_volume_credits 제거
