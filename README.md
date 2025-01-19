@@ -4,7 +4,7 @@
 
 # 목차
 
-- [ ] Chapter 01 (wip)
+- [x] Chapter 01
 - [ ] Chapter 02
 - [ ] Chapter 03
 - [ ] Chapter 04
