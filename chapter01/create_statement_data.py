@@ -79,11 +79,10 @@ def create_statement_data(invoice, plays):
         :return:
         """
         calc = PerformanceCalculator(a_performance, play_for(a_performance))
-        print(calc)
         result = a_performance.copy()  # shallow copy
 
         result["play"] = calc.play
-        result["amount"] = amount_for(result)
+        result["amount"] = calc.amount()
         result["volume_credits"] = volume_credits_for(result)
         return result  # total_amount와 total_volume_credits 제거
 
