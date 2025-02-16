@@ -15,6 +15,10 @@ class Province:
         self,
         data: dict  # 전체 데이터를 dict로 받도록 변경
     ):
+        """ 각 지역별 수요, 가격, 소속 생산자, 총생산량을 저장하는 객체
+
+        :param data:
+        """
         self._name = data['name']
         self._producers = []
         self._total_production = 0
@@ -60,3 +64,31 @@ class Province:
     @price.setter
     def price(self, arg):
         self._price = int(arg)
+
+    @property
+    def shortfall(self):
+        return self._demand - self._total_production
+
+    @property
+    def profit(self):
+        return self.demand_value - self.demand_cost
+
+    @property
+    def demand_cost(self):
+        remaining_demand = self.demand
+        result = 0
+        sorted_producers = sorted(self.producers, key=lambda p: p.cost)
+
+        for p in sorted_producers:
+            contribution = min(remaining_demand, p.production)
+            remaining_demand -= contribution
+            result += contribution * p.cost
+        return result
+
+    @property
+    def demand_value(self):
+        return self.satisfied_demand * self.price
+
+    @property
+    def satisfied_demand(self):
+        return min(self._demand, self.total_production)

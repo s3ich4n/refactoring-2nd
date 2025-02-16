@@ -1,8 +1,11 @@
+import pytest
+
 from chapter04.src.province import Province
 
 
-def test_sample_province_data():
-    test_data = {
+@pytest.fixture(name="test_data")
+def sample_province_data():
+    return {
         "name": "Asia",
         "producers": [
             {"name": "Byzantium", "cost": 10, "production": 9},
@@ -13,4 +16,11 @@ def test_sample_province_data():
         "price": 20,
     }
 
+
+def test_sample_province_data(test_data):
     assert Province(test_data)
+
+
+def test_province_shortfall(test_data):
+    asia = Province(test_data)
+    assert asia.shortfall == 5

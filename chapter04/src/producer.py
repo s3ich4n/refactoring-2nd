@@ -4,6 +4,11 @@ class Producer:
         province,  # aProvince에 해당
         data: dict  # data 객체를 통째로 받음
     ):
+        """ 지역에 해당하는 생산자 정보 객체
+
+        :param province:
+        :param data:
+        """
         self._province = province
         self._cost = data.get('cost')
         self._name = data.get('name')
