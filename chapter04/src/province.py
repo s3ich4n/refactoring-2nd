@@ -32,8 +32,33 @@ class Province:
         self._total_production += producer.production
 
     @property
-    def producers(self):  # getter 먼저 정의
-        return self._producers
+    def name(self):
+        return self._name
 
-    @producers.setter
-    def producers(self, producers): ...
+    @property
+    def producers(self):
+        return self._producers.copy()  # JavaScript의 slice()와 같은 역할
+
+    @property
+    def total_production(self):
+        return self._total_production
+
+    @total_production.setter
+    def total_production(self, arg):
+        self._total_production = arg
+
+    @property
+    def demand(self):
+        return self._demand
+
+    @demand.setter
+    def demand(self, arg):
+        self._demand = int(arg)  # parseInt() 대신 int() 사용
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, arg):
+        self._price = int(arg)
