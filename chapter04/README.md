@@ -24,5 +24,75 @@
 
 이런 사진이 있는데 비즈니스로직만 먼저 짜고 테스트해보자.
 
+![예시 사진](./media/001.png)
+
+예시코드는 `src` 디렉터리에, 테스트코드는 `tests` 디렉터리에 추가한다.
+
+## 4.3 첫 번째 테스트
+
+자바스크립트에선 Mocha를, 나는 pytest를 써서 테스트한다. 픽스처를 구성하고...
+
+```python
+@pytest.fixture(name="test_data")
+def sample_province_data():
+    return {
+        "name": "Asia",
+        "producers": [
+            {"name": "Byzantium", "cost": 10, "production": 9},
+            {"name": "Attalia", "cost": 12, "production": 10},
+            {"name": "Sinope", "cost": 10, "production": 6},
+        ],
+        "demand": 30,
+        "price": 20,
+    }
+```
+
+```python
+def test_sample_province_data(test_data):
+    assert Province(test_data)
+```
+
+테스트하면 끝.
+
+```python
+def test_province_shortfall(test_data):
+    asia = Province(test_data)
+    assert asia.shortfall == 5
+```
+
+값이 뻔하더라도, 일부러 고장내본다. shortfall 연산을 엉망으로 만들면 하나는 깨진다.
+
+![일부러 고장내기. 진짜 잘 테스트하나 확인하는게 쉬우니까](./media/002.png)
+
+여기서 마틴 파울러의 팁 하나.
+
+> 자주 테스트하시오.
+> 작성중인 코드는 최소 몇 분 간격으로 테스트하시오.
+> 적어도 한 번은 전체 테스트를 돌려보시오.
+
+이번에 uvicorn 공부하면서 전체 테스트 케이스가 600개 언저리였고 다 돌리는데 1분 10초 정도 걸렸다(M3 Pro 기준). 아무튼 자주 돌리기.
+
+패스하면 초록막대, 페일나면 빨간막대인 건 너무 유명하다. 마틴 파울러는 여기에 더해서 테스트가 하나라도 빨간막대면 리팩터 하면 안된다고 조언한다. 차라리 이전상태(다 패스하던)로 돌아가서 재작업하길 주문한다.
+
+## 4.4 테스트 추가하기
+
+테스트는 위험요인을 기준으로 테스트 해야한다. 읽고쓰는 저렴한 테스트보다 가장 걱정되는 부분을 집중해서 테스트하는게 더 가치있다.
+
+두 번째 격언.
+
+> 완벽하게 만드느라 테스트를 못 돌릴거면, 불완전한 테스트라도 작성해 실행하는 게 낫다.
+
+```python
+def test_province_profit(test_data):
+    asia = Province(test_data)
+    assert asia.profit == 230
+```
+
+이 테스트는 실제 계산결과 `230`을 넣고 테스트한거다.
+
+그런데 책에서 말하는 바는 픽스처가 각 테스트별로 별개로 쓰이길 바랐다. "테스트끼리 상호작용하게 하는 공유 픽스처"를 만들지 말라는 것.
+
+그럼 scope를 `function` 으로 돌리면 매번 생기니, `beforeEach` 와 유사하게 행동한다.
+
 [^1]: GoF 의 그 사나이.
 [^2]: 그게 안 된다면 레거시 코드 활용 전략에서 제시하는 테스트 추가용 기법을 배우면 좋겠다. <br /> https://m.yes24.com/Goods/Detail/64586851
