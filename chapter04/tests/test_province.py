@@ -13,4 +13,4 @@ def test_sample_province_data():
         "price": 20,
     }
 
-    assert Province(**test_data)
+    assert Province(test_data)

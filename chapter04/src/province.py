@@ -13,19 +13,17 @@ from chapter04.src.producer import Producer
 class Province:
     def __init__(
         self,
-        name: str,
-        producers: list[dict],
-        demand: int,
-        price: int,
+        data: dict  # 전체 데이터를 dict로 받도록 변경
     ):
-        self._name = name
+        self._name = data['name']
         self._producers = []
         self._total_production = 0
-        self._demand = demand
-        self._price = price
+        self._demand = data['demand']
+        self._price = data['price']
 
-        for producer in producers:
-            self.add_producer(Producer(**producer))
+        # producers 데이터로 Producer 인스턴스들 생성
+        for producer in data['producers']:
+            self.add_producer(Producer(self, producer))
 
     def add_producer(self, producer):
         self._producers.append(producer)
