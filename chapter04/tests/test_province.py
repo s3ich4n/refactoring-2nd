@@ -3,7 +3,10 @@ import pytest
 from chapter04.src.province import Province
 
 
-@pytest.fixture(name="test_data")
+@pytest.fixture(
+    name="test_data",
+    scope="function",   # beforeEach 효과를 주려면
+)
 def sample_province_data():
     return {
         "name": "Asia",
@@ -24,3 +27,7 @@ def test_sample_province_data(test_data):
 def test_province_shortfall(test_data):
     asia = Province(test_data)
     assert asia.shortfall == 5
+
+def test_province_profit(test_data):
+    asia = Province(test_data)
+    assert asia.profit == 230
