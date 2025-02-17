@@ -7,7 +7,7 @@
 - [x] Chapter 01
 - [x] Chapter 02
 - [ ] Chapter 03
-- [ ] Chapter 04
+- [x] Chapter 04
 - [ ] Chapter 05
 - [ ] Chapter 06
 - [ ] Chapter 07
