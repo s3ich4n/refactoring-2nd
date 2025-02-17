@@ -31,3 +31,10 @@ def test_province_shortfall(test_data):
 def test_province_profit(test_data):
     asia = Province(test_data)
     assert asia.profit == 230
+
+def test_change_production(test_data):
+    asia = Province(test_data)
+    asia.producers[0].production = 20
+
+    assert asia.shortfall == -6
+    assert asia.profit == 292
