@@ -116,5 +116,130 @@ def test_change_production(test_data):
 표준 픽스처를 취해서, 테스트를 돌리고 검증한다. (Arrange-Act-Assert 라 하든 Given-When-Then이라 하든, Setup-Exercise-Verify라 하든...)
 핵심은 초기 작업 중 공통 부분을 픽스처화 해서 "초기화"를 잘 하고 테스트를 격리시키라는 말.
 
+## 4.6 경계 조건 검사하기
+
+현재까진 해피케이스만 봤다. 안좋은 케이스도 있어야한다. 마틴 파울러는 현 예시 같은 경우에 주로 '컬렉션이 빈 경우'를 테스트하는 편이라고 한다.
+
+```python
+def test_province_with_no_producers():
+    data = {
+        "name": "Asia",
+        "producers": [],
+        "demand": 30,
+        "price": 20
+    }
+
+    no_producers = Province(data)
+
+    assert no_producers.shortfall == 30
+    assert no_producers.profit == 0
+```
+
+숫자형 값은 `0`일때도 테스트해보면:
+
+```python
+def test_province_with_zero_demand(asia):
+    asia = Province(asia)
+    asia.demand = 0
+
+    assert asia.shortfall == -25
+    assert asia.profit == 0
+```
+
+음수도 넣어보면? 수요가 마이너스인 경우. 근데 이럴 수 있나?  잠깐, 이런 '이럴 수 있나?' 를 생각하는 게 중요하다. 프로그램의 특이사항, 경계를 생각할 필요가 있다. 그걸 테스트 해야한다.
+
+```python
+def test_province_with_negative_demand(asia):
+    asia = Province(asia)
+    asia.demand = -1
+
+    assert asia.shortfall == -26
+    assert asia.profit == -10
+```
+
+> [!TIP]
+> 문제가 생길 여지가 있는 경계 조건을 생각하자.
+> 그 부분을 집중적으로 테스트하자.
+
+만일 수요값이 비어있다면?
+
+```python
+def test_province_with_empty_demand(asia):
+    asia = Province(asia)
+
+    with pytest.raises(ValueError):
+        asia.demand = ""
+
+    # asia.demand에 문자열을 넣는 행위가 Exception이 터지므로
+    # 허용하지 않는다. (i.e., NaN 케이스가 없음)
+```
+
+이런 식으로, 내 프로그램의 특이케이스와 망가지기 쉬운 부분을 중점해서 테스트하면 보다 견고하게 구성할 수 있다. 이럴 땐 아주 못된 사람 마인드로 테스트 해야한다(!)
+
+만약 `producers` 값이 이상하다면?
+
+```python
+def test_province_with_invalid_producers():
+    data = {
+        "name": "Asia",
+        "producers": "",    # 아예 안맞는 값을 넣으면?
+        "demand": 30,
+        "price": 20
+    }
+
+    # 반복문을 정상으로 판단함(str도 Sequence니까 iterable함)
+    # 그리고 빈 문자열은 반복문을 패스해서 객체 생성이 완료됨.
+    # 기본값이 들어가져서 작동됨.
+    prov = Province(data)
+
+    assert prov.shortfall == 30
+```
+
+음.... 책에서처럼 터지게 하려면?
+
+```python
+def test_province_with_invalid_producers():
+    data = {
+        "name": "Asia",
+        "producers": " ",    # 이러면....
+        "demand": 30,
+        "price": 20
+    }
+
+    # ...반복문을 정상으로 판단함(str도 Sequence니까 iterable함)
+    # 그리고 빈 문자열을 `Producer` 객체에 넣으려다보니 터짐
+    with pytest.raises(AttributeError):
+        assert Province(data)
+
+```
+
+의도한 대로 터졌다. 그러면 프로그램은 어떻게 대응해야할까? 생각의 흐름을 써보자:
+
+- 의미있는 오류메시지를 뱉게할까?
+    - 신뢰할 수 없는 곳에서(외부에서 JSON을 로드하고 던진다거나) 데이터가 오면
+    - 그땐 테스트 해야할지도?
+- 일단 지금 그대로 둬도 되면?
+    - 신뢰할 만한 다른 곳에서 입력 객체를 만들어주는 경우(같은 코드베이스 안 처럼)
+    - 그럼 굳이 안해도 될 지도..? 중복검증은 크게 의미없으니까
+
+같은 생각을 계속 해야한다.
+
+하지만 마틴 파울러는 리팩터 전이라면 이런 테스트를 리팩터 전에는 안쓴다고 제안한다. 리팩터링은 겉보기 동작에 영향을 주면 안된다. 이런 건 겉보기 동작관 관계없다.
+
+그런데 이렇게 데이터가 잘못 흘러서 디버깅 하기 어려울 것 같으면 어서션 추가하기(10.6절)을 해줘도 좋다.
+
+> [!TIP]
+> 어차피 모든 버그를 못 잡을 것이다 라고 생각해서 테스트를 안짜면
+> 대다수의 버그를 잡을 기회를 날리는 셈이다
+
+그러면 테스트를 어디까지 해야할까? 사실 적당히가 중요한 법이다. 수확 체감 법칙(_law of diminishing returns_) 이 적용된다는 뜻이다. 
+테스트 자체에 힘을 주면 의욕이 떨어질 수도 있다. 즉, 진짜 필요한 테스트, 가치있는 테스트를 잘 챙겨서 쓰자. 그게 결국 나를 도와줄 것이다.
+
+후에 배울 기법들을 더 배우고 리팩터 하면서 잠재적인 버그를 체크할 때가 오길 바란다.
+
+## 4.7 끝나지 않은 여정
+
+
+
 [^1]: GoF 의 그 사나이.
 [^2]: 그게 안 된다면 레거시 코드 활용 전략에서 제시하는 테스트 추가용 기법을 배우면 좋겠다. <br /> https://m.yes24.com/Goods/Detail/64586851
