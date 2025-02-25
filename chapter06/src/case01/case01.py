@@ -23,16 +23,19 @@ class Invoice:
 
 
 def print_owing(invoice):
-
-    outstanding = 0
-
     print_banner()
 
-    for order in invoice.orders:
-        outstanding += order.amount
+    outstanding = calculate_outstanding(invoice)
 
     recore_due_date(invoice)
     method_name(invoice, outstanding)
+
+
+def calculate_outstanding(invoice):
+    result = 0
+    for order in invoice.orders:
+        result += order.amount
+    return result
 
 
 def recore_due_date(invoice):
