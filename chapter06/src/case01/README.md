@@ -1,4 +1,3 @@
-
 # 6.1 함수 추출하기
 
 _Extract Function_
