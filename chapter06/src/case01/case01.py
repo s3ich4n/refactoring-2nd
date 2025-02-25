@@ -23,10 +23,6 @@ class Invoice:
 
 
 def print_owing(invoice):
-    def method_name():
-        print(f"고객명: {invoice.customer}")
-        print(f"채무액: {outstanding}")
-        print(f"마감일: {arrow.get(invoice.due_date).format('YYYY-MM-DD HH:mm:ss ZZ', locale='ko')}")
 
     outstanding = 0
 
@@ -35,10 +31,20 @@ def print_owing(invoice):
     for order in invoice.orders:
         outstanding += order.amount
 
+    recore_due_date(invoice)
+    method_name(invoice, outstanding)
+
+
+def recore_due_date(invoice):
     today = kst_now()
     invoice.due_date = today + timedelta(days=30)
 
-    method_name()
+
+def method_name(invoice, outstanding):
+    print(f"고객명: {invoice.customer}")
+    print(f"채무액: {outstanding}")
+    print(f"마감일: {arrow.get(invoice.due_date).format('YYYY-MM-DD HH:mm:ss ZZ', locale='ko')}")
+
 
 def print_banner():
     print("==============")
