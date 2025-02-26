@@ -1,13 +1,16 @@
-from dataclasses import dataclass
-
-
-@dataclass
 class OperationPlan:
-    min: int
-    max: int
+    def __init__(self, temperature_min: int, temperature_max: int):
+        self.temperature_min: int = temperature_min
+        self.temperature_max: int = temperature_max
+
+    def __eq__(self, other):
+        return (
+            self.temperature_min == other.temperature_min
+            and self.temperature_max == other.temperature_max
+        )
 
     def contains(self, value):
-        return self.min <= value <= self.max
+        return self.temperature_min <= value <= self.temperature_max
 
 
 station = {
