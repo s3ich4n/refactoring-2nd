@@ -1,6 +1,6 @@
 import pytest
 
-from src.case02.case02 import (
+from src.case02.case02_1 import (
     Driver,
     rating,
 )
@@ -18,5 +18,5 @@ def a_driver():
         (Driver(number_of_late_deliveries=5), 1),
     ]
 )
-def test_case02(a_driver, expected):
+def test_case02_1(a_driver, expected):
     assert rating(a_driver) == expected
