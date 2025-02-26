@@ -1,6 +1,6 @@
 import pytest
 
-from chapter06.src.case01.case01 import (
+from src.case01.case01 import (
     Invoice,
     Order,
     print_owing,
