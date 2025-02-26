@@ -7,7 +7,7 @@ from datetime import (
 
 import arrow
 
-from chapter06.src.my_clock import kst_now
+from src.my_clock import kst_now
 
 
 @dataclass
