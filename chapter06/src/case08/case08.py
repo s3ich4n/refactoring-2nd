@@ -6,6 +6,9 @@ class OperationPlan:
     min: int
     max: int
 
+    def contains(self, value):
+        return self.min <= value <= self.max
+
 
 station = {
     "name": "ZB1",
@@ -20,8 +23,4 @@ station = {
 
 
 def readings_outside_range(station, range=None):
-    return [
-        r["temp"]
-        for r in station["readings"]
-        if r["temp"] < range.min or r["temp"] > range.max
-    ]
+    return [r["temp"] for r in station["readings"] if not range.contains(r["temp"])]
