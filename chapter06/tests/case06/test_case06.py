@@ -1,18 +1,20 @@
-from chapter06.src.case06.case06 import (
+from src.case06.case06 import (
     Spaceship,
-    manager,
+    Owner,
+    get_owner,
+    set_owner,
 )
 
 
 def test_access_data():
-    space_ship = Spaceship(owner=manager.owner)
+    space_ship = Spaceship(owner=get_owner())
 
-    assert space_ship.owner["first_name"] == "Martin"
-    assert space_ship.owner["last_name"] == "Fowler"
+    assert space_ship.owner.first_name == "Martin"
+    assert space_ship.owner.last_name == "Fowler"
 
 
 def test_modify_data():
-    manager.owner = {"first_name": "Rebecca", "last_name": "Parsons"}
+    set_owner(Owner(first_name="Rebecca", last_name="Parsons"))
 
-    assert manager.owner["first_name"] == "Rebecca"
-    assert manager.owner["last_name"] == "Parsons"
+    assert get_owner().first_name == "Rebecca"
+    assert get_owner().last_name == "Parsons"
