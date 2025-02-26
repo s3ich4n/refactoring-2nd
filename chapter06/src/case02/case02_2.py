@@ -9,10 +9,7 @@ class Customer:
 
 def report_lines(a_customer: Customer):
     lines = []
-    gather_customer_data(lines, a_customer)
+
+    lines.append(["name", a_customer.name]) # first step
+    lines.append(["location", a_customer.location]) # second step and done. (also remove function)
     return lines
-
-
-def gather_customer_data(out, a_customer):
-    out.append(["name", a_customer.name])
-    out.append(["location", a_customer.location])
