@@ -48,3 +48,6 @@ def amount_overdue(date_range: DateRange): ...
 7. 다 바꿨다면 기존 매개변수를 지우고 테스트한다.
 
 ## 예시
+
+1. Dataclass 로 데이터를 표현하도록 추가
+2. 그걸 매개변수로 넣음 ( b83e8d31 )
