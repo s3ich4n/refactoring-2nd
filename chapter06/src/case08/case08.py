@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class OperationPlan:
     temperature_floor: int
-    temperature_ceiling: int
+    max: int
 
 
 station = {
@@ -21,5 +21,7 @@ station = {
 
 def readings_outside_range(station, min, max, range=None):
     return [
-        r["temp"] for r in station["readings"] if r["temp"] < min or r["temp"] > max
+        r["temp"]
+        for r in station["readings"]
+        if r["temp"] < min or r["temp"] > range.max
     ]
