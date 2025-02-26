@@ -19,7 +19,7 @@ station = {
 }
 
 
-def readings_outside_range(station, min, max, range=None):
+def readings_outside_range(station, range=None):
     return [
         r["temp"]
         for r in station["readings"]
