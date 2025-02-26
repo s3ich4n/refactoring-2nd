@@ -3,6 +3,7 @@ from src.case09.case09 import (
     tax_threshold,
     acquire_reading,
     calculate_base_charge,
+    Reading,
 )
 
 
@@ -45,22 +46,23 @@ def test_taxable_charge():
 
 def test_integration():
     # 통합 테스트: 전체 흐름 테스트
-    reading = acquire_reading()
-
-    # 첫 번째 예시
-    base_charge_direct = (
-        base_rate(reading["month"], reading["year"]) * reading["quantity"]
-    )
-
-    # 두 번째 예시
-    base = base_rate(reading["month"], reading["year"]) * reading["quantity"]
-    taxable_charge = max(0, base - tax_threshold(reading["year"]))
+    raw_reading = acquire_reading()
+    reading = Reading(**raw_reading)
+    #
+    # # 첫 번째 예시
+    # base_charge_direct = (
+    #     base_rate(reading["month"], reading["year"]) * reading["quantity"]
+    # )
+    #
+    # # 두 번째 예시
+    # base = base_rate(reading["month"], reading["year"]) * reading["quantity"]
+    # taxable_charge = max(0, base - tax_threshold(reading["year"]))
 
     # 세 번째 예시
-    basic_charge_amount = calculate_base_charge(reading)
+    basic_charge_amount = reading.base_charge()
 
     # 모든 계산이 일치하는지 확인
-    assert base_charge_direct == 7.0
-    assert base == 7.0
+    # assert base_charge_direct == 7.0
+    # assert base == 7.0
     assert basic_charge_amount == 7.0
-    assert taxable_charge == 0
+    # assert taxable_charge == 0

@@ -1,3 +1,36 @@
+class Reading:
+    def __init__(
+        self,
+        customer: str,
+        quantity: int,
+        month: int,
+        year: int,
+    ):
+        self._customer = customer
+        self._quantity = quantity
+        self._month = month
+        self._year = year
+
+    @property
+    def customer(self):
+        return self._customer
+
+    @property
+    def quantity(self):
+        return self._quantity
+
+    @property
+    def month(self):
+        return self._month
+
+    @property
+    def year(self):
+        return self._year
+
+    def base_charge(self):
+        return base_rate(self._month, self._year) * self._quantity
+
+
 # 전력 요금을 계산하는 간단한 base_rate 함수 예시
 def base_rate(month, year):
     # 월별 기본 요금 (간단한 예시)
