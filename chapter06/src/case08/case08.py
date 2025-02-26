@@ -19,7 +19,7 @@ station = {
 }
 
 
-def readings_outside_range(station, min, max):
+def readings_outside_range(station, min, max, range=None):
     return [
         r["temp"] for r in station["readings"] if r["temp"] < min or r["temp"] > max
     ]
