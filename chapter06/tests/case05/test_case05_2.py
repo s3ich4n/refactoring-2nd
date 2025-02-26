@@ -13,6 +13,6 @@ def test_case05_2():
         Customer(Address("FL")),  # 플로리다 - 뉴잉글랜드 아님
     ]
 
-    new_englanders = [c for c in customers if in_new_england(c)]
+    new_englanders = [c for c in customers if in_new_england(c.address.state)]
 
     assert len(new_englanders) == 2
