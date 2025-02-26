@@ -12,4 +12,5 @@ class Customer:
 
 
 def in_new_england(a_customer):
-    return a_customer.address.state in ["MA", "CT", "ME", "VT", "NH", "RI"]
+    state_code = a_customer.address.state
+    return state_code in ["MA", "CT", "ME", "VT", "NH", "RI"]
