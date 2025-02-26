@@ -12,8 +12,7 @@ class Customer:
 
 
 def in_new_england(a_customer):
-    state_code = a_customer.address.state
-    return is_in_new_england(state_code)
+    return is_in_new_england(a_customer.address.state)
 
 
 def is_in_new_england(state_code):
