@@ -39,3 +39,15 @@ def get_rating(driver):
 쉬운 케이스에서만 처리하기. 복잡한 건 다른 방안으로...
 
 ## 예시 - 가장 쉬운 경우
+
+걍 하면 됨
+
+## 예시 - 조금 더 일이 많은 경우
+
+잘라 붙이기로 어려운 경우, 한 번에 한 문장씩 처리하자(여러 문장을 호출한 곳으로 옮기기(8.4절))
+
+할 수 있는 단위면 한방에 하고, 논리적으로 어렵다 싶으면 나눠서 처리
+
+안 되면 돌아오는 것이 핵심이다.
+
+![Ever get that feelin' of déjà vu?](https://i.namu.wiki/i/-h9qWmpCzdSI3nejutTA-JoiSc5LbjBFPCia7swhcJBtTViyWLn9or7o2KXuFtnKf7xC82cAKd-qvJma4E3Ang.webp)
