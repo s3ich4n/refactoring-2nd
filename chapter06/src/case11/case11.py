@@ -1,8 +1,6 @@
 def price_order(product, quantity, shipping_method):
     price_data = calculate_pricing_data(product, quantity)
-    price = apply_shipping(price_data, shipping_method)
-
-    return price
+    return apply_shipping(price_data, shipping_method)
 
 
 def calculate_pricing_data(product, quantity):
@@ -21,6 +19,5 @@ def apply_shipping(price_data, shipping_method):
     else:
         shipping_per_case = shipping_method["fee_per_case"]
     shipping_cost = price_data["quantity"] * shipping_per_case
-    price = price_data["base_price"] - price_data["discount"] + shipping_cost
 
-    return price
+    return price_data["base_price"] - price_data["discount"] + shipping_cost
