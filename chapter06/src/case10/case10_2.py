@@ -1,4 +1,11 @@
 # client 2
-a_reading = acquire_reading()
-base_charge = base_rate(a_reading.month, a_reading.year) * a_reading.quantity
-taxable_charge = max(0, base - tax_threshold(a_reading.year))
+from src.case10.case10 import (
+    acquire_reading,
+    enrich_reading,
+    tax_threshold,
+)
+
+raw_reading = acquire_reading()
+a_reading = enrich_reading(raw_reading)
+base_charge = a_reading.base_charge
+taxable_charge = max(0, a_reading.base_charge - tax_threshold(a_reading.year))

@@ -1,3 +1,9 @@
 # client 3
-a_reading = acquire_reading()
-basic_charge_amount = calculate_base_charge(a_reading)
+from src.case10.case10 import (
+    acquire_reading,
+    enrich_reading,
+)
+
+raw_reading = acquire_reading()
+a_reading = enrich_reading(raw_reading)
+basic_charge_amount = a_reading.base_charge
