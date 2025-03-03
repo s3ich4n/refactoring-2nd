@@ -2,6 +2,10 @@ class CustomerData:
     def __init__(self, data):
         self._data = data
 
+    # example (1) - write
+    def set_usage(self, customer_id, year, month, amount):
+        get_customer_data()[customer_id]["usages"][year][month] = amount
+
 
 def get_customer_data():
     return customer_data
@@ -38,11 +42,6 @@ customer_data = {
         # more customers in a similar form
     },
 }
-
-
-# example (1) - write
-def set_usage(customer_id, year, month, amount):
-    get_customer_data()[customer_id]["usages"][year][month] = amount
 
 
 # example (2) - read

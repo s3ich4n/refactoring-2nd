@@ -1,8 +1,13 @@
-from src.case01.case01_2 import set_usage, compare_usage, customer_data
+from src.case01.case01_2 import (
+    compare_usage,
+    customer_data,
+    CustomerData,
+)
 
 
 def test_set_usage():
-    set_usage("1920", "2016", "3", 60)
+    data = CustomerData(customer_data)
+    data.set_usage("1920", "2016", "3", 60)
     assert customer_data["1920"]["usages"]["2016"]["3"] == 60
 
 
