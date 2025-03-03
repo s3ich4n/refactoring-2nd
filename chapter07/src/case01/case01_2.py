@@ -5,29 +5,44 @@ class CustomerData:
     def __init__(self, data):
         self._data = data
 
-    # example (1) - write
     def set_usage(self, customer_id, year, month, amount):
         self._data[customer_id]["usages"][year][month] = amount
 
     def usage(self, customer_id, year, month):
         return self._data[customer_id]["usages"][year][month]
 
+    def compare_usage(self, customer_id, later_year, month):
+        later = self.usage(customer_id, later_year, month)
+        earlier_year = str(int(later_year) - 1)
+        earlier = self.usage(customer_id, earlier_year, month)
+
+        return {
+            "later_amount": later,
+            "change": later - earlier,
+        }
+
     def get_raw_data(self):
         return deepcopy(self._data)
 
 
+# 전역 인스턴스
+customer_data = None
+
+
+def initialize_data(data):
+    global customer_data
+    customer_data = CustomerData(data)
+
+
 def get_customer_data():
-    return CustomerData(raw_data)
+    return customer_data
 
 
 def get_raw_data_of_customers():
     return customer_data.get_raw_data()
 
 
-def set_raw_data_of_customers(arg):
-    customer_data = CustomerData(arg)
-
-
+# 예제 데이터 초기화
 raw_data = {
     "1920": {
         "name": "martin",
@@ -52,16 +67,10 @@ raw_data = {
     },
 }
 
+# 데이터 초기화
+initialize_data(raw_data)
 
-customer_data = CustomerData(raw_data)
 
-
-# example (2) - read
+# 이제 compare_usage는 CustomerData 클래스의 메서드를 사용합니다
 def compare_usage(customer_id, later_year, month):
-    later = get_customer_data().usage(customer_id, later_year, month)
-    earlier = get_customer_data().usage(customer_id, f"{int(later_year) - 1}", month)
-
-    return {
-        "later_amount": later,
-        "change": later - earlier,
-    }
+    return get_customer_data().compare_usage(customer_id, later_year, month)
