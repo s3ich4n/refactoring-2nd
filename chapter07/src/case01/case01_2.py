@@ -1,3 +1,20 @@
+class CustomerData:
+    def __init__(self, data):
+        self._data = data
+
+
+def get_customer_data():
+    return customer_data
+
+
+def get_raw_data_of_customers():
+    return customer_data._data
+
+
+def set_raw_data_of_customers(arg):
+    customer_data = CustomerData(arg)
+
+
 customer_data = {
     "1920": {
         "name": "martin",
@@ -25,13 +42,15 @@ customer_data = {
 
 # example (1) - write
 def set_usage(customer_id, year, month, amount):
-    customer_data[customer_id]["usages"][year][month] = amount
+    get_customer_data()[customer_id]["usages"][year][month] = amount
 
 
 # example (2) - read
 def compare_usage(customer_id, later_year, month):
-    later = customer_data[customer_id]["usages"][later_year][month]
-    earlier = customer_data[customer_id]["usages"][f"{int(later_year) - 1}"][month]
+    later = get_customer_data()[customer_id]["usages"][later_year][month]
+    earlier = get_customer_data()[customer_id]["usages"][f"{int(later_year) - 1}"][
+        month
+    ]
 
     return {
         "later_amount": later,
