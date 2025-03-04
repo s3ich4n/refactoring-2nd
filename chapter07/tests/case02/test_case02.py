@@ -18,7 +18,8 @@ def test_adding_courses():
     basic_course = Course("Basic Programming", False)
     advanced_course = Course("Advanced Python", True)
 
-    person.courses = [basic_course, advanced_course]
+    for course in [basic_course, advanced_course]:
+        person.add_course(course)
     assert len(person.courses) == 2
     assert person.courses[0].name == "Basic Programming"
     assert person.courses[1].name == "Advanced Python"
@@ -32,6 +33,7 @@ def test_counting_advanced_courses():
         Course("Advanced AI", True),
         Course("Web Basics", False),
     ]
-    person.courses = courses
+    for course in courses:
+        person.add_course(course)
 
     assert person.get_num_advanced_courses() == 2

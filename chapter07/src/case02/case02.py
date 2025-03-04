@@ -1,3 +1,6 @@
+import copy
+
+
 class Person:
     def __init__(self, name):
         self._name = name
@@ -9,11 +12,21 @@ class Person:
 
     @property
     def courses(self):
-        return self._courses
+        return copy.copy(self._courses)
 
-    @courses.setter
-    def courses(self, course_list):
-        self._courses = course_list
+    def add_course(self, course):
+        self._courses.append(course)
+
+    def remove_course(self, course):
+        try:
+            self._courses.remove(course)
+        except ValueError:
+            raise ValueError("Course not found")
+
+    # 가급적 안 쓰는 방안으로.
+    # @courses.setter
+    # def courses(self, course_list):
+    #     self._courses = copy.copy(course_list)
 
     def get_num_advanced_courses(self):
         return len([course for course in self.courses if course.is_advanced])
