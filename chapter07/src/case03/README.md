@@ -57,4 +57,4 @@ orders = list(filter(lambda o: o.priority.higher_than(Priority("normal")), order
 
 
 [^1]: 단계 1에서 변수를 캡슐화하며 만든 세터
-[^1]: 단계 1에서 변수를 캡슐화하며 만든 게터
+[^2]: 단계 1에서 변수를 캡슐화하며 만든 게터
