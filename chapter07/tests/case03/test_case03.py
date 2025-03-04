@@ -1,13 +1,16 @@
 # test_order.py
-import pytest
-from src.case03.case03 import Order, count_high_priority_orders
+from src.case03.case03 import (
+    count_high_priority_orders,
+    Priority,
+    Order,
+)
 
 
 def test_order_creation():
     # 기본 주문 생성 테스트
     data = {"priority": "high", "product": "Widget", "quantity": 5, "buyer": "John Doe"}
     order = Order(data)
-    assert order.priority_string() == "high"
+    assert order.priority == Priority("high")
     assert order._product == "Widget"
     assert order._quantity == 5
     assert order._buyer == "John Doe"
@@ -17,7 +20,7 @@ def test_order_with_missing_data():
     # 누락된 데이터가 있는 경우 테스트
     data = {"product": "Widget"}
     order = Order(data)
-    assert order.priority_string() == "normal"  # 기본값 확인
+    assert order.priority == Priority("normal")  # 기본값 확인
     assert order._quantity == 0  # 기본값 확인
     assert order._product == "Widget"
     assert order._buyer is None
@@ -51,7 +54,6 @@ def test_no_high_priority_orders():
 
 
 # 나중의 리팩토링을 위한 Priority 클래스 테스트
-@pytest.mark.skip(reason="Priority 클래스 리팩토링 준비")
 def test_priority_comparison():
     # 향후 Priority 클래스로 리팩토링할 때 사용할 테스트
     data1 = {"priority": "high"}
@@ -59,4 +61,4 @@ def test_priority_comparison():
     order1 = Order(data1)
     order2 = Order(data2)
     # Priority 클래스 리팩토링 후 아래 테스트 활성화
-    # assert order1.priority.higher_than(order2.priority)
+    assert order1.priority.higher_than(order2.priority)
