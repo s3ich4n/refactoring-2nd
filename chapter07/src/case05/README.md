@@ -78,4 +78,6 @@ class TelephoneNumber:
 
 ## 예시
 
-전화번호만 별도로 빼보자.
+전화번호만 별도로 빼보자. (07ebffb8c26d91622dc93de7ecb16c7b8fe1e5e9)
+
+뺀 이름에서 포괄적인 요소를 바꾸고 테스트코드도 갈아엎는다. (f0797e280a91562fe474e00aa2aa303e36c8bacb)
