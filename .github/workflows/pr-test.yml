@@ -1,0 +1,70 @@
+name: PR Test & Coverage Report
+
+on:
+  pull_request:
+    branches:
+      - main  # 필요시 변경
+
+jobs:
+  test:
+    name: Run Tests & Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.6'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install coverage junitparser
+
+      - name: Run Tests (by Makefile)
+        run: |
+          make test
+
+      - name: Combine Coverage Report (XML)
+        run: |
+          coverage xml -o coverage.xml
+
+      - name: Parse Coverage and Write Summary
+        run: |
+          TOTAL=$(xmllint --xpath 'string(/coverage/@line-rate)' coverage.xml)
+          PERCENTAGE=$(echo "$TOTAL * 100" | bc)
+          echo "| Metric  | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-----|" >> $GITHUB_STEP_SUMMARY
+          echo "| 📊 Line Coverage | ${PERCENTAGE}% |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Publish Test Results Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "test-results/*.xml"
+        if: always()
+
+      - name: Upload Coverage HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: htmlcov/
+
+      - name: Upload JUnit XML (for archive)
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-xml-reports
+          path: test-results/
+
+      - name: Add Coverage Comment to PR
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## 📝 Coverage Report
+            | Metric  | Value |
+            |--------|-----|
+            | 📊 Line Coverage | ${PERCENTAGE}% |
+        if: github.event_name == 'pull_request'

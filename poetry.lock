@@ -196,6 +196,17 @@ files = [
 ]
 
 [[package]]
+name = "junitparser"
+version = "3.2.0"
+description = "Manipulates JUnit/xUnit Result XML files"
+optional = false
+python-versions = "*"
+files = [
+    {file = "junitparser-3.2.0-py2.py3-none-any.whl", hash = "sha256:e14fdc0a999edfc15889b637390e8ef6ca09a49532416d3bd562857d42d4b96d"},
+    {file = "junitparser-3.2.0.tar.gz", hash = "sha256:b05e89c27e7b74b3c563a078d6e055d95cf397444f8f689b0ca616ebda0b3c65"},
+]
+
+[[package]]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
@@ -347,4 +358,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a1becce150de9193a0cf3c78baa634068170d8a2634b48175a35a272e52cd68b"
+content-hash = "5c4df4afd6900c1ada772ec6d97adc2367b7a665f44e3d00793c1f4f6f77d4ca"
