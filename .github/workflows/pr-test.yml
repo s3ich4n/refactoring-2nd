@@ -37,11 +37,17 @@ jobs:
 
       - name: Parse Coverage and Write Summary
         run: |
-          TOTAL=$(xmllint --xpath 'string(/coverage/@line-rate)' coverage.xml)
-          PERCENTAGE=$(echo "$TOTAL * 100" | bc)
-          echo "| Metric  | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|-----|" >> $GITHUB_STEP_SUMMARY
-          echo "| 📊 Line Coverage | ${PERCENTAGE}% |" >> $GITHUB_STEP_SUMMARY
+          poetry run python -c "
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('coverage.xml')
+          root = tree.getroot()
+          line_rate = float(root.attrib['line-rate'])
+          percentage = line_rate * 100
+          with open('${{ github.step_summary }}', 'a') as f:
+              f.write('| Metric  | Value |\n')
+              f.write('|--------|-----|\n')
+              f.write(f'| 📊 Line Coverage | {percentage:.2f}% |\n')
+          "
 
       - name: Publish Test Results Summary
         uses: test-summary/action@v2
