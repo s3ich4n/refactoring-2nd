@@ -2,9 +2,9 @@
 
 
 class Person:
-    def __init__(self, name):
+    def __init__(self, name, department):
         self._name = name
-        self._department = None  # 기본값
+        self._department = department
 
     @property
     def name(self):
@@ -17,6 +17,10 @@ class Person:
     @department.setter
     def department(self, arg):
         self._department = arg
+
+    @property
+    def manager(self):
+        return self._department.manager
 
 
 class Department:
