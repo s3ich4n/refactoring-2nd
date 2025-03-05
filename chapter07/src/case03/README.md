@@ -17,12 +17,12 @@ After
 # ...객체화
 class Priority:
     _values = ("low", "normal", "high", "rush")
-    
+
     def __init__(self, value):
         if value not in self._values:
             raise ValueError(f"Invalid priority value: {value}")
         self._value = value
-    
+
     def higher_than(self, other):
         return self._values.index(self._value) > self._values.index(other._value)
 
@@ -42,8 +42,6 @@ orders = list(filter(lambda o: o.priority.higher_than(Priority("normal")), order
 
 ## 절차
 
-`<br />`, `→` 복사해서 쓰기
-
 1. 아직 변수를 캡슐화 하지 않았다면 캡슐화(6.6절) 한다.
 2. 단순한 값 클래스(_value class_)를 만든다. 생성자는 기존 값을 인수로 받아 저장하고, 이 값을 반환하게 한다
 3. 정적 검사를 수행한다
@@ -51,10 +49,9 @@ orders = list(filter(lambda o: o.priority.higher_than(Priority("normal")), order
 5. 새로 만든 클래스의 게터를 호출한 결과를 반환하도록 게터[^2]를 수정한다
 6. 테스트한다
 7. 함수 이름을 바꾸면(6.5절) 원본 접근자의 동작을 더 잘 드러낼 수 있는지 검토한다 <br />
-→ 참조를 값으로 바꾸거나(9.4절), 값을 참조로 바꾸면(9.5절) 새로 만든 객체의 역할(값, 참조 객체)이 더 잘 드러나는지 검토한다.
+   → 참조를 값으로 바꾸거나(9.4절), 값을 참조로 바꾸면(9.5절) 새로 만든 객체의 역할(값, 참조 객체)이 더 잘 드러나는지 검토한다.
 
 ## 예시
-
 
 [^1]: 단계 1에서 변수를 캡슐화하며 만든 세터
 [^2]: 단계 1에서 변수를 캡슐화하며 만든 게터

@@ -14,7 +14,7 @@ class Person:
     @property
     def courses(self):
         return self._courses
-    
+
     @courses.setter
     def courses(self, a_list):
         self._courses = a_list
@@ -24,7 +24,8 @@ class Person:
 After
 
 ```python
-import copy # for shallow copy
+import copy  # for shallow copy
+
 
 class Person:
     def __init__(self, courses):
@@ -35,6 +36,7 @@ class Person:
         return copy.copy(self._courses)
 
     def add_course(self, a_course): ...
+
     def remove_course(self, a_course): ...
 ```
 
@@ -53,11 +55,9 @@ class Person:
 
 ## 절차
 
-`<br />`, `→` 복사해서 쓰기
-
 1. 컬렉션을 캡슐화부터 한다(6.6절)
 2. 컬렉션에 원소를 추가/제거 하는 함수를 추가한다 <br />
-→ 컬렉션 자체를 통째로 바꾸는 세터는 제거한다(11.7절). 세터를 제거할 수 없다면 인수로 받은 컬렉션을 복제해 저장하게 만든다
+   → 컬렉션 자체를 통째로 바꾸는 세터는 제거한다(11.7절). 세터를 제거할 수 없다면 인수로 받은 컬렉션을 복제해 저장하게 만든다
 3. 정적 검사를 수행한다
 4. 컬렉션을 참조하는 부분을 모두 찾는다. 컬렉션의 변경자를 호출하는 코드가 모두 앞에서 추가한 추가/제거 함수를 호출하도록 수정한다. 하나씩 바꿀 때마다 테스트한다.
 5. 컬렉션 게터를 수정해서 원본 내용을 수정할 수 없는 읽기전용 프록시나 복제본을 반환하게 한다.
