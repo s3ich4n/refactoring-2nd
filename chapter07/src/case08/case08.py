@@ -18,10 +18,6 @@ class Person:
     def department(self, arg):
         self._department = arg
 
-    @property
-    def manager(self):
-        return self._department.manager
-
 
 class Department:
     def __init__(self):

@@ -38,7 +38,8 @@ def test_person_and_department():
     department.manager = "Charlie"
     sut = Person("Alice", department=department)
 
-    assert sut.manager == "Charlie"
+    assert sut.department.manager == "Charlie"
+    assert sut.department.charge_code == "D100"
 
 
 @pytest.mark.parametrize(
@@ -57,4 +58,5 @@ def test_department_parametrized(charge_code, manager):
     department.manager = manager
     sut = Person("Alice", department=department)
 
-    assert sut.manager == manager
+    assert sut.department.manager == manager
+    assert sut.department.charge_code == charge_code
