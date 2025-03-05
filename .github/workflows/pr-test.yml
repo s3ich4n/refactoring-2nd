@@ -23,7 +23,7 @@ jobs:
         run: |
           pipx install poetry
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           poetry install --no-root
 
@@ -67,6 +67,18 @@ jobs:
           name: junit-xml-reports
           path: test-results/
 
+      - name: Parse Coverage for Comment
+        id: coverage-comment
+        run: |
+          poetry run python -c "
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('coverage.xml')
+          root = tree.getroot()
+          line_rate = float(root.attrib['line-rate'])
+          percentage = line_rate * 100
+          print(f'COVERAGE_PERCENT={percentage:.2f}')  # GitHub Actions에서 사용할 환경 변수 출력"
+        shell: bash
+
       - name: Add Coverage Comment to PR
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -75,5 +87,6 @@ jobs:
             ## 📝 Coverage Report
             | Metric  | Value |
             |--------|-----|
-            | 📊 Line Coverage | ${PERCENTAGE}% |
+            | 📊 Line Coverage | ${{ steps.coverage-comment.outputs.COVERAGE_PERCENT }}% |
+          token: ${{ secrets.PAT_TOKEN }}
         if: github.event_name == 'pull_request'
