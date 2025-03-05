@@ -4,17 +4,29 @@ class Person:
 
     @property
     def office_area_code(self):
-        return self._office_area_code
+        return self._telephone_number.area_code
 
     @property
     def office_number(self):
-        return self._office_number
+        return self._telephone_number.number
+
+    @property
+    def telephone_number(self):
+        return str(self._telephone_number)
 
 
 class TelephoneNumber:
-    def __init__(self, area_code):
+    def __init__(self, area_code, office_number):
         self._area_code = area_code
+        self._number = office_number
+
+    def __str__(self):
+        return f"({self.area_code}) {self.number}"
 
     @property
     def area_code(self):
         return self._area_code
+
+    @property
+    def number(self):
+        return self._number
