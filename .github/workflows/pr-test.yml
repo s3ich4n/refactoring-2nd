@@ -19,10 +19,13 @@ jobs:
         with:
           python-version: '3.12.6'
 
-      - name: Install Dependencies
+      - name: Install Poetry
         run: |
-          python -m pip install -r requirements.txt
-          python -m pip install coverage junitparser
+          pipx install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
 
       - name: Run Tests (by Makefile)
         run: |
@@ -30,7 +33,7 @@ jobs:
 
       - name: Combine Coverage Report (XML)
         run: |
-          coverage xml -o coverage.xml
+          poetry run coverage xml -o coverage.xml
 
       - name: Parse Coverage and Write Summary
         run: |
