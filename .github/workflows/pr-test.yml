@@ -53,29 +53,38 @@ jobs:
           summary=$(poetry run python -c "
           import xml.etree.ElementTree as ET
           import glob
-
+          
           total_tests = 0
           total_failures = 0
           total_skipped = 0
           total_errors = 0
           total_time = 0.0
-
+          
           for file in glob.glob('test-results/*.xml'):
               tree = ET.parse(file)
               root = tree.getroot()
-              total_tests += int(root.attrib['tests'])
-              total_failures += int(root.attrib['failures'])
-              total_skipped += int(root.attrib['skipped'])
-              total_errors += int(root.attrib.get('errors', 0))
-              total_time += float(root.attrib.get('time', 0))
-
+          
+              if root.tag == 'testsuites':
+                  suites = root.findall('testsuite')
+              elif root.tag == 'testsuite':
+                  suites = [root]
+              else:
+                  raise ValueError(f'Unexpected root tag: {root.tag}')
+          
+              for suite in suites:
+                  total_tests += int(suite.attrib.get('tests', 0))
+                  total_failures += int(suite.attrib.get('failures', 0))
+                  total_skipped += int(suite.attrib.get('skipped', 0))
+                  total_errors += int(suite.attrib.get('errors', 0))
+                  total_time += float(suite.attrib.get('time', 0))
+          
           passed = total_tests - total_failures - total_skipped
           print(f'PASSED={passed}')
           print(f'FAILED={total_failures}')
           print(f'SKIPPED={total_skipped}')
           print(f'TIME={total_time:.2f}')
           ")
-
+          
           echo "$summary" >> "$GITHUB_OUTPUT"
 
       - name: Publish Test Results Summary (optional)
