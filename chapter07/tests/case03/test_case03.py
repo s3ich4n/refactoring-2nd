@@ -62,3 +62,23 @@ def test_priority_comparison():
     order2 = Order(data2)
     # Priority 클래스 리팩토링 후 아래 테스트 활성화
     assert order1.priority.higher_than(order2.priority)
+
+
+def test_order_priority_setter():
+    # 문자열로 priority 설정 테스트
+    order = Order({"priority": "normal", "product": "Widget"})
+    order.priority = "high"
+    assert order.priority == Priority("high")
+
+    # Priority 객체로 priority 설정 테스트
+    new_priority = Priority("rush")
+    order.priority = new_priority
+    assert order.priority == Priority("rush")
+    assert order.priority == new_priority  # 참조 동일성이 아닌 값 동일성 확인
+
+    # 잘못된 값에 대한 예외 발생 테스트
+    try:
+        order.priority = "invalid"
+        assert False, "잘못된 우선순위 값이 허용되었습니다"
+    except ValueError:
+        pass  # 예상대로 예외 발생
