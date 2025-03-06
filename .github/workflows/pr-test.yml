@@ -47,12 +47,22 @@ jobs:
           ")
           echo "COVERAGE_PERCENT=$percentage" >> "$GITHUB_OUTPUT"
 
-      - name: Parse JUnit Results for Summary
+      - name: Parse Merged JUnit Results for Summary (only merged-results.xml)
         id: junit-summary
         run: |
           summary=$(poetry run python -c "
           import xml.etree.ElementTree as ET
-          import glob
+          
+          tree = ET.parse('test-results/merged-results.xml')
+          root = tree.getroot()
+          
+          # 'testsuites' 또는 'testsuite'에 따라 동작 다름 (방어코드)
+          if root.tag == 'testsuites':
+              suites = root.findall('testsuite')
+          elif root.tag == 'testsuite':
+              suites = [root]
+          else:
+              raise ValueError(f'Unexpected root tag: {root.tag}')
           
           total_tests = 0
           total_failures = 0
@@ -60,23 +70,12 @@ jobs:
           total_errors = 0
           total_time = 0.0
           
-          for file in glob.glob('test-results/*.xml'):
-              tree = ET.parse(file)
-              root = tree.getroot()
-          
-              if root.tag == 'testsuites':
-                  suites = root.findall('testsuite')
-              elif root.tag == 'testsuite':
-                  suites = [root]
-              else:
-                  raise ValueError(f'Unexpected root tag: {root.tag}')
-          
-              for suite in suites:
-                  total_tests += int(suite.attrib.get('tests', 0))
-                  total_failures += int(suite.attrib.get('failures', 0))
-                  total_skipped += int(suite.attrib.get('skipped', 0))
-                  total_errors += int(suite.attrib.get('errors', 0))
-                  total_time += float(suite.attrib.get('time', 0))
+          for suite in suites:
+              total_tests += int(suite.attrib.get('tests', 0))
+              total_failures += int(suite.attrib.get('failures', 0))
+              total_skipped += int(suite.attrib.get('skipped', 0))
+              total_errors += int(suite.attrib.get('errors', 0))
+              total_time += float(suite.attrib.get('time', 0))
           
           passed = total_tests - total_failures - total_skipped
           print(f'PASSED={passed}')
@@ -87,10 +86,10 @@ jobs:
           
           echo "$summary" >> "$GITHUB_OUTPUT"
 
-      - name: Publish Test Results Summary (optional)
+      - name: Publish Merged Test Results Summary
         uses: test-summary/action@v2
         with:
-          paths: "test-results/*.xml"
+          paths: "test-results/merged-results.xml"
         if: always()
 
       - name: Upload Coverage HTML Report
@@ -99,7 +98,7 @@ jobs:
           name: coverage-html
           path: htmlcov/
 
-      - name: Upload JUnit XML (for archive)
+      - name: Upload All JUnit XML Files (for archive)
         uses: actions/upload-artifact@v4
         with:
           name: junit-xml-reports
