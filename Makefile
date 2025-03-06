@@ -1,7 +1,9 @@
-.PHONY: test test-all test-ch01 test-ch04 test-ch06 test-ch07 clean clean-coverage clean-results combine-coverage merge-junit
+.PHONY: test test-all clean clean-coverage clean-results combine-coverage merge-junit
 
 CHAPTERS = ch01 ch04 ch06 ch07
 TEST_RESULTS_DIR = test-results
+COVERAGE_DIR = $(TEST_RESULTS_DIR)/coverage
+JUNIT_DIR = $(TEST_RESULTS_DIR)/junit
 
 # Poetry 환경 강제
 POETRY ?= poetry run
@@ -18,43 +20,29 @@ clean-results:
 
 clean-coverage:
 	$(POETRY) coverage erase
-	rm -f $(TEST_RESULTS_DIR)/.coverage*
+	rm -f $(COVERAGE_DIR)/.coverage*
 
-test-all: clean-results clean-coverage $(TEST_RESULTS_DIR) test-ch01 test-ch04 test-ch06 test-ch07 combine-coverage merge-junit
+test-all: clean-results clean-coverage $(TEST_RESULTS_DIR) run-all combine-coverage merge-junit
 
-test-ch01:
-	cd chapter01 && \
-	COVERAGE_FILE=../$(TEST_RESULTS_DIR)/.coverage.ch01 $(POETRY) coverage run -m pytest -v \
-	    --junitxml=../$(TEST_RESULTS_DIR)/ch01-results.xml
-
-test-ch04:
-	cd chapter04 && \
-	COVERAGE_FILE=../$(TEST_RESULTS_DIR)/.coverage.ch04 $(POETRY) coverage run -m pytest -v \
-	    --junitxml=../$(TEST_RESULTS_DIR)/ch04-results.xml
-
-test-ch06:
-	cd chapter06 && \
-	COVERAGE_FILE=../$(TEST_RESULTS_DIR)/.coverage.ch06 $(POETRY) coverage run -m pytest -v \
-	    --junitxml=../$(TEST_RESULTS_DIR)/ch06-results.xml
-
-test-ch07:
-	cd chapter07 && \
-	COVERAGE_FILE=../$(TEST_RESULTS_DIR)/.coverage.ch07 $(POETRY) coverage run -m pytest -v \
-	    --junitxml=../$(TEST_RESULTS_DIR)/ch07-results.xml
+run-all:
+	@for chapter in $(CHAPTERS); do \
+		echo "Running tests for $$chapter..."; \
+		(cd $$chapter && \
+		COVERAGE_FILE=../$(COVERAGE_DIR)/.coverage.$$chapter \
+		$(POETRY) coverage run -m pytest -v \
+		--junitxml=../$(JUNIT_DIR)/$$chapter-results.xml) || exit $$?; \
+	done
 
 combine-coverage:
-	$(POETRY) coverage combine $(TEST_RESULTS_DIR)
+	$(POETRY) coverage combine $(COVERAGE_DIR)
 	$(POETRY) coverage report
 	$(POETRY) coverage html
 
 merge-junit:
 	$(POETRY) python -m pip show junitparser > /dev/null || $(POETRY) python -m pip install junitparser
 	$(POETRY) python -m junitparser merge \
-	    $(TEST_RESULTS_DIR)/ch01-results.xml \
-	    $(TEST_RESULTS_DIR)/ch04-results.xml \
-	    $(TEST_RESULTS_DIR)/ch06-results.xml \
-	    $(TEST_RESULTS_DIR)/ch07-results.xml \
-	    $(TEST_RESULTS_DIR)/merged-results.xml
+		$(JUNIT_DIR)/*.xml \
+		$(TEST_RESULTS_DIR)/merged-results.xml
 
 $(TEST_RESULTS_DIR):
-	mkdir -p $(TEST_RESULTS_DIR)
+	mkdir -p $(COVERAGE_DIR) $(JUNIT_DIR)
