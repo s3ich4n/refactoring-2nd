@@ -1,6 +1,7 @@
 def discount(input_value, quantity):
+    result = input_value
     if input_value > 50:
-        input_value = input_value - 2
+        result = result - 2
     if quantity > 100:
-        input_value = input_value - 1
-    return input_value
+        result = result - 1
+    return result
