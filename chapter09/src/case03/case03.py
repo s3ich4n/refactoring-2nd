@@ -5,11 +5,6 @@ class SomeClass:
 
     @property
     def production(self):
-        assert self._production == self.calculated_production
-        return self._production
-
-    @property
-    def calculated_production(self):
         return sum(adjustment.amount for adjustment in self._adjustments)
 
     def apply_adjustment(self, an_adjustment):
