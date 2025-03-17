@@ -4,8 +4,8 @@
 
 
 class Organization:
-    def __init__(self, name, country):
-        self._name = name
+    def __init__(self, title, country):
+        self._title = title
         self._country = country
 
 
