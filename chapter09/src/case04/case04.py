@@ -1,28 +1,26 @@
 class TelephoneNumber:
-    def __init__(self):
-        self._area_code = None
-        self._number = None
+    def __init__(self, area_code, number):
+        self._area_code = area_code
+        self._number = number
+
+    def __eq__(self, other):
+        return self._area_code == other._area_code and self._number == other._number
+
+    def __hash__(self):
+        return hash((self._area_code, self._number))
 
     @property
     def area_code(self):
         return self._area_code
 
-    @area_code.setter
-    def area_code(self, arg):
-        self._area_code = arg
-
     @property
     def number(self):
         return self._number
 
-    @number.setter
-    def number(self, arg):
-        self._number = arg
-
 
 class Person:
     def __init__(self):
-        self._telephone_number = TelephoneNumber()
+        self._telephone_number = TelephoneNumber("", "")
 
     @property
     def office_area_code(self):
@@ -30,7 +28,7 @@ class Person:
 
     @office_area_code.setter
     def office_area_code(self, arg):
-        self._telephone_number.area_code = arg
+        self._telephone_number = TelephoneNumber(arg, self.office_number)
 
     @property
     def office_number(self):
@@ -38,4 +36,4 @@ class Person:
 
     @office_number.setter
     def office_number(self, arg):
-        self._telephone_number.number = arg
+        self._telephone_number = TelephoneNumber(self.office_area_code, arg)
