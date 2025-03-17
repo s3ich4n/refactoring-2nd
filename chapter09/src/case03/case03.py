@@ -9,4 +9,3 @@ class SomeClass:
 
     def apply_adjustment(self, an_adjustment):
         self._adjustments.append(an_adjustment)
-        self._production += an_adjustment.amount
