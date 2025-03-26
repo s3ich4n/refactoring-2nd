@@ -1,6 +1,6 @@
 import pytest
 
-from chapter10.src.case02.case02_02 import (
+from chapter10.src.case02.case02_2 import (
     Employee,
     seniority_payout_eligibility,
 )
