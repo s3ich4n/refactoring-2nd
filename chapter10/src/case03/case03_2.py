@@ -12,9 +12,11 @@ class Instrument:
 
 def adjusted_capital(an_instrument: Instrument):
     result = 0
-    if an_instrument.capital > 0:
-        if an_instrument.interest_rate > 0 and an_instrument.duration > 0:
-            result = (
-                an_instrument.income / an_instrument.duration
-            ) * an_instrument.adjustment
+    if an_instrument.capital <= 0:
+        return result
+
+    if an_instrument.interest_rate > 0 and an_instrument.duration > 0:
+        result = (
+            an_instrument.income / an_instrument.duration
+        ) * an_instrument.adjustment
     return result
