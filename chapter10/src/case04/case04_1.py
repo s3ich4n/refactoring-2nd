@@ -9,12 +9,23 @@ def speeds(birds):
     return {b.name: air_speed_velocity(b) for b in birds}
 
 
+def create_bird(bird):
+    if bird.name == "EuropeanSwallow":
+        return EuropeanSwallow(bird)
+    elif bird.type == "AfricanSwallow":
+        return AfricanSwallow(bird)
+    elif bird.type == "NorwegianBlueParrot":
+        return NorwegianBlueParrot(bird)
+    else:
+        return Bird(bird)
+
+
 def plumage(bird):
-    return Bird(bird).plumage()
+    return create_bird(bird).plumage()
 
 
 def air_speed_velocity(bird):
-    return Bird(bird).air_speed_velocity()
+    return create_bird(bird).air_speed_velocity()
 
 
 @dataclass
@@ -49,3 +60,12 @@ class Bird:
             return 0 if self.name.is_nailed else 10 + self.name.voltage / 10
         else:
             return None
+
+
+class EuropeanSwallow(Bird): ...
+
+
+class AfricanSwallow(Bird): ...
+
+
+class NorwegianBlueParrot(Bird): ...
