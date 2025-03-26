@@ -11,18 +11,20 @@ class Plan:
     regular_service_charge: float
 
 
-def is_before(date1: date, date2: date) -> bool:
-    return date1 < date2
+def is_summer(a_date: date, plan: Plan) -> bool:
+    return plan.summer_start <= a_date <= plan.summer_end
 
 
-def is_after(date1: date, date2: date) -> bool:
-    return date1 > date2
+def calculate_summer_charge(quantity: float, plan: Plan) -> float:
+    return quantity * plan.summer_rate
+
+
+def calculate_regular_charge(quantity: float, plan: Plan) -> float:
+    return quantity * plan.regular_rate + plan.regular_service_charge
 
 
 def calculate_charge(a_date: date, quantity: float, plan: Plan) -> float:
-    if not is_before(a_date, plan.summer_start) and not is_after(
-        a_date, plan.summer_end
-    ):
-        return quantity * plan.summer_rate
+    if is_summer(a_date, plan):
+        return calculate_summer_charge(quantity, plan)
     else:
-        return quantity * plan.regular_rate + plan.regular_service_charge
+        return calculate_regular_charge(quantity, plan)
