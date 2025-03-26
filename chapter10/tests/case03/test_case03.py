@@ -1,6 +1,6 @@
 import pytest
 
-from chapter10.src.case03.case03 import (
+from chapter10.src.case03.case03_1 import (
     Employee,
     pay_amount,
 )
