@@ -10,7 +10,7 @@ def speeds(birds):
 
 
 def create_bird(bird):
-    if bird.name == "EuropeanSwallow":
+    if bird.type == "EuropeanSwallow":
         return EuropeanSwallow(bird)
     elif bird.type == "AfricanSwallow":
         return AfricanSwallow(bird)
@@ -43,7 +43,7 @@ class Bird:
 
     def plumage(self):
         if self.name.type == "EuropeanSwallow":
-            return "average"
+            raise Exception("Error in plumage")
         elif self.name.type == "AfricanSwallow":
             return "tired" if self.name.number_of_coconuts > 2 else "average"
         elif self.name.type == "NorwegianBlueParrot":
@@ -62,7 +62,9 @@ class Bird:
             return None
 
 
-class EuropeanSwallow(Bird): ...
+class EuropeanSwallow(Bird):
+    def plumage(self):
+        return "average"
 
 
 class AfricanSwallow(Bird): ...
