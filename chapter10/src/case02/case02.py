@@ -9,9 +9,7 @@ class Employee:
 
 
 def disability_payout_eligibility(an_employee: Employee) -> int:
-    if an_employee.seniority < 2:
-        return 0
-    if an_employee.months_disabled > 12:
+    if an_employee.seniority < 2 or an_employee.months_disabled > 12:
         return 0
     if an_employee.is_part_time:
         return 0
