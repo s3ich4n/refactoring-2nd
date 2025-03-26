@@ -1,6 +1,6 @@
 import pytest
 
-from chapter10.src.case02.case02 import (
+from chapter10.src.case02.case02_1 import (
     Employee,
     disability_payout_eligibility,
 )
