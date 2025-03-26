@@ -10,31 +10,42 @@ def speeds(birds):
 
 
 def plumage(bird):
-    if bird.type == "EuropeanSwallow":
-        return "average"
-    elif bird.type == "AfricanSwallow":
-        return "tired" if bird.number_of_coconuts > 2 else "average"
-    elif bird.type == "NorwegianBlueParrot":
-        return "scorched" if bird.voltage > 100 else "beautiful"
-    else:
-        return "unknown"
+    return Bird(bird).plumage()
 
 
 def air_speed_velocity(bird):
-    if bird.type == "EuropeanSwallow":
-        return 35
-    elif bird.type == "AfricanSwallow":
-        return 40 - 2 * bird.number_of_coconuts
-    elif bird.type == "NorwegianBlueParrot":
-        return 0 if bird.is_nailed else 10 + bird.voltage / 10
-    else:
-        return None
+    return Bird(bird).air_speed_velocity()
 
 
 @dataclass
-class Bird:
+class BirdData:
     name: str
     type: str
     number_of_coconuts: int = 0
     voltage: float = 0
     is_nailed: bool = False
+
+
+class Bird:
+    def __init__(self, name: BirdData):
+        self.name = name
+
+    def plumage(self):
+        if self.name.type == "EuropeanSwallow":
+            return "average"
+        elif self.name.type == "AfricanSwallow":
+            return "tired" if self.name.number_of_coconuts > 2 else "average"
+        elif self.name.type == "NorwegianBlueParrot":
+            return "scorched" if self.name.voltage > 100 else "beautiful"
+        else:
+            return "unknown"
+
+    def air_speed_velocity(self):
+        if self.name.type == "EuropeanSwallow":
+            return 35
+        elif self.name.type == "AfricanSwallow":
+            return 40 - 2 * self.name.number_of_coconuts
+        elif self.name.type == "NorwegianBlueParrot":
+            return 0 if self.name.is_nailed else 10 + self.name.voltage / 10
+        else:
+            return None
