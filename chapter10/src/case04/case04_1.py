@@ -42,14 +42,7 @@ class Bird:
         self.name = name
 
     def plumage(self):
-        if self.name.type == "EuropeanSwallow":
-            raise Exception("Error in plumage")
-        elif self.name.type == "AfricanSwallow":
-            raise Exception("Error in plumage")
-        elif self.name.type == "NorwegianBlueParrot":
-            raise Exception("Error in plumage")
-        else:
-            return "unknown"
+        return "unknown"
 
     def air_speed_velocity(self):
         if self.name.type == "EuropeanSwallow":
