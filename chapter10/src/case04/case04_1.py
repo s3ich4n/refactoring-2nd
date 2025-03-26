@@ -45,7 +45,7 @@ class Bird:
         if self.name.type == "EuropeanSwallow":
             raise Exception("Error in plumage")
         elif self.name.type == "AfricanSwallow":
-            return "tired" if self.name.number_of_coconuts > 2 else "average"
+            raise Exception("Error in plumage")
         elif self.name.type == "NorwegianBlueParrot":
             return "scorched" if self.name.voltage > 100 else "beautiful"
         else:
@@ -67,7 +67,9 @@ class EuropeanSwallow(Bird):
         return "average"
 
 
-class AfricanSwallow(Bird): ...
+class AfricanSwallow(Bird):
+    def plumage(self):
+        return "tired" if self.name.number_of_coconuts > 2 else "average"
 
 
 class NorwegianBlueParrot(Bird): ...
