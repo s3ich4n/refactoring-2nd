@@ -19,25 +19,25 @@ def pay_amount(employee: Employee):
         return {"amount": 0, "reason_code": "SEP"}
     if employee.is_retired:
         return {"amount": 0, "reason_code": "RET"}
-    else:
-        # 급여 계산 로직
-        base_salary = employee.base_salary
-        working_days = employee.calculate_working_days()
-        overtime_hours = employee.get_overtime_hours()
 
-        # 기본급 계산
-        gross_pay = base_salary * (working_days / 20)
+    # 급여 계산 로직
+    base_salary = employee.base_salary
+    working_days = employee.calculate_working_days()
+    overtime_hours = employee.get_overtime_hours()
 
-        # 초과근무 수당 계산
-        overtime_pay = overtime_hours * (base_salary / 160) * 1.5
+    # 기본급 계산
+    gross_pay = base_salary * (working_days / 20)
 
-        # 세금 및 공제액 계산
-        tax_rate = 0.15 if gross_pay <= 3000000 else 0.25
-        tax_amount = (gross_pay + overtime_pay) * tax_rate
+    # 초과근무 수당 계산
+    overtime_pay = overtime_hours * (base_salary / 160) * 1.5
 
-        # 최종 급여 계산
-        net_pay = gross_pay + overtime_pay - tax_amount
+    # 세금 및 공제액 계산
+    tax_rate = 0.15 if gross_pay <= 3000000 else 0.25
+    tax_amount = (gross_pay + overtime_pay) * tax_rate
 
-        result = {"amount": net_pay, "reason_code": "REG"}
+    # 최종 급여 계산
+    net_pay = gross_pay + overtime_pay - tax_amount
+
+    result = {"amount": net_pay, "reason_code": "REG"}
 
     return result
