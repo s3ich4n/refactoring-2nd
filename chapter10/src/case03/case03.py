@@ -16,7 +16,7 @@ class Employee:
 
 def pay_amount(employee: Employee):
     if employee.is_separated:
-        result = {"amount": 0, "reason_code": "SEP"}
+        return {"amount": 0, "reason_code": "SEP"}
     else:
         if employee.is_retired:
             result = {"amount": 0, "reason_code": "RET"}
