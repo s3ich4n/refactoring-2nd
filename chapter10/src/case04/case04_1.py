@@ -45,26 +45,28 @@ class Bird:
         return "unknown"
 
     def air_speed_velocity(self):
-        if self.name.type == "EuropeanSwallow":
-            return 35
-        elif self.name.type == "AfricanSwallow":
-            return 40 - 2 * self.name.number_of_coconuts
-        elif self.name.type == "NorwegianBlueParrot":
-            return 0 if self.name.is_nailed else 10 + self.name.voltage / 10
-        else:
-            return None
+        return None
 
 
 class EuropeanSwallow(Bird):
     def plumage(self):
         return "average"
 
+    def air_speed_velocity(self):
+        return 35
+
 
 class AfricanSwallow(Bird):
     def plumage(self):
         return "tired" if self.name.number_of_coconuts > 2 else "average"
 
+    def air_speed_velocity(self):
+        return 40 - 2 * self.name.number_of_coconuts
+
 
 class NorwegianBlueParrot(Bird):
     def plumage(self):
         return "scorched" if self.name.voltage > 100 else "beautiful"
+
+    def air_speed_velocity(self):
+        return 0 if self.name.is_nailed else 10 + self.name.voltage / 10
