@@ -1,4 +1,4 @@
-from chapter10.src.case05.case05 import (
+from chapter10.src.case05.case05_1 import (
     UnknownCustomer,
     PaymentHistory,
     Site,
