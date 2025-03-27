@@ -56,7 +56,8 @@ def test_set_billing_plan():
     customer = Customer("John", "premium plan", payment_history)
     site = Site(customer)
     set_billing_plan(site, "new plan")
-    assert customer.billing_plan == "new plan"
+    # setter를 없앴으니까 이를 반영
+    assert customer.billing_plan == "premium plan"
 
     # unknown 고객에 대한 테스트 - 값이 변경되지 않음
     site_unknown = Site("unknown")
