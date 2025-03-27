@@ -1,21 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class TelephoneNumber:
-    def __init__(self, area_code, number):
-        self._area_code = area_code
-        self._number = number
-
-    def __eq__(self, other):
-        return self._area_code == other._area_code and self._number == other._number
-
-    def __hash__(self):
-        return hash((self._area_code, self._number))
-
-    @property
-    def area_code(self):
-        return self._area_code
-
-    @property
-    def number(self):
-        return self._number
+    area_code: str
+    number: str
 
 
 class Person:
