@@ -14,6 +14,9 @@ class Customer:
         self._billing_plan = billing_plan
         self._payment_history = payment_history
 
+    def is_unknown(self):
+        return False
+
     @property
     def name(self):
         return self._name
@@ -43,6 +46,17 @@ class PaymentHistory:
 class Registry:
     def __init__(self):
         self.billing_plans = {"basic": "basic plan", "premium": "premium plan"}
+
+
+# XXX
+#   파이썬도 자바스크립트처럼 동적 타이핑이 되도록 코드를 구성해볼 예정
+class UnknownCustomer:
+    def __init__(self, unknown):
+        self._unknown = unknown
+
+    @property
+    def is_unknown(self):
+        return self._unknown
 
 
 # 클라이언트 코드 (AS-IS)
@@ -78,3 +92,13 @@ def get_weeks_delinquent(site):
     else:
         weeks_delinquent = a_customer.payment_history.weeks_delinquent_in_last_year
     return weeks_delinquent
+
+
+def is_unknown(arg):
+    if not (isinstance(arg, Customer) or isinstance(arg, UnknownCustomer)):
+        raise Exception("unknown customer")
+
+    if isinstance(arg, Customer):
+        return arg.is_unknown()
+    else:
+        return arg.is_unknown
