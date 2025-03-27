@@ -1,5 +1,3 @@
-import pytest
-
 from chapter10.src.case05.case05 import (
     UnknownCustomer,
     PaymentHistory,
@@ -10,7 +8,6 @@ from chapter10.src.case05.case05 import (
     get_billing_plan,
     set_billing_plan,
     get_weeks_delinquent,
-    is_unknown,
 )
 
 
@@ -84,21 +81,3 @@ def test_unknown_customer_class():
 
     known_customer = UnknownCustomer(False)
     assert known_customer.is_unknown is False
-
-
-def test_is_unknown_function():
-    # 정상 고객에 대한 테스트
-    payment_history = PaymentHistory(5)
-    customer = Customer("John", "premium plan", payment_history)
-
-    # Site 객체를 전달해야 하는데 Customer 객체를 전달한 경우의 테스트
-    site = Site(customer)
-    with pytest.raises(Exception) as excinfo:
-        is_unknown(site)
-    assert "unknown customer" in str(excinfo.value)
-
-    # unknown 고객 테스트 (예외 발생 확인)
-    site_unknown = Site("unknown")
-    with pytest.raises(Exception) as excinfo:
-        is_unknown(site_unknown)
-    assert "unknown customer" in str(excinfo.value)

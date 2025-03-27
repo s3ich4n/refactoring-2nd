@@ -54,6 +54,12 @@ class Registry:
 
 # XXX
 #   파이썬도 자바스크립트처럼 동적 타이핑이 되도록 코드를 구성해볼 예정
+class NullPaymentHistory:
+    @property
+    def weeks_delinquent_in_last_year(self):
+        return 0
+
+
 class UnknownCustomer:
     def __init__(self, unknown):
         self._unknown = unknown
@@ -66,6 +72,20 @@ class UnknownCustomer:
     def name(self):
         return "occupant"
 
+    @property
+    def billing_plan(self):
+        # 항상 "basic"을 반환
+        return "basic plan"
+
+    @billing_plan.setter
+    def billing_plan(self, arg):
+        # 아무 동작도 하지 않음
+        pass
+
+    @property
+    def payment_history(self):
+        return NullPaymentHistory()
+
 
 # 클라이언트 코드
 def get_customer_name(site):
@@ -76,40 +96,12 @@ def get_customer_name(site):
 
 
 def get_billing_plan(site, registry):
-    a_customer = site.customer
-
-    plan = (
-        registry.billing_plans["basic"]
-        if is_unknown(a_customer)
-        else a_customer.billing_plan
-    )
-
-    return plan
+    return site.customer.billing_plan
 
 
 def set_billing_plan(site, new_plan):
-    a_customer = site.customer
-
-    if not is_unknown(a_customer):
-        a_customer.billing_plan = new_plan
+    site.customer.billing_plan = new_plan
 
 
 def get_weeks_delinquent(site):
-    a_customer = site.customer
-    weeks_delinquent = (
-        0
-        if is_unknown(a_customer)
-        else a_customer.payment_history.weeks_delinquent_in_last_year
-    )
-
-    return weeks_delinquent
-
-
-def is_unknown(arg):
-    if not (isinstance(arg, Customer) or isinstance(arg, UnknownCustomer)):
-        raise Exception("unknown customer")
-
-    if isinstance(arg, Customer):
-        return arg.is_unknown()
-    else:
-        return arg.is_unknown
+    return site.customer.payment_history.weeks_delinquent_in_last_year
