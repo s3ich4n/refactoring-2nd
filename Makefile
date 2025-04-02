@@ -1,6 +1,6 @@
 .PHONY: test test-all clean clean-coverage clean-results combine-coverage merge-junit
 
-CHAPTERS = chapter01 chapter04 chapter06 chapter07 chapter09 chapter10
+CHAPTERS = chapter01 chapter04 chapter06 chapter07 chapter09 chapter10 chapter11
 TEST_RESULTS_DIR = test-results
 COVERAGE_DIR = $(TEST_RESULTS_DIR)/coverage
 JUNIT_DIR = $(TEST_RESULTS_DIR)/junit
