@@ -5,15 +5,13 @@ def search_villains(people):
     Args:
         people: 검색할 사람들의 리스트
     """
-    found = False
     for p in people:
-        if not found:
-            if p == "joker":
-                send_alert(p)
-                found = True
-            if p == "saruman":
-                send_alert()
-                found = True
+        if p == "joker":
+            send_alert(p)
+            return
+        if p == "saruman":
+            send_alert(p)
+            return
 
 
 def send_alert(p):
