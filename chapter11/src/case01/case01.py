@@ -1,4 +1,4 @@
-def alert_for_villains(people):
+def find_villains(people):
     """
     사람 목록에서 joker나 saruman을 검색하고 발견 시 경고를 보냅니다.
 
@@ -7,11 +7,9 @@ def alert_for_villains(people):
     """
     for p in people:
         if p == "joker":
-            send_alert(p)
-            return
+            return p
         if p == "saruman":
-            send_alert(p)
-            return
+            return p
 
 
 def send_alert(p):
