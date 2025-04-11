@@ -1,5 +1,12 @@
 import pytest
-from chapter11.src.case02.case02 import usd, base_charge, bottom_band, middle_band, top_band
+
+from chapter11.src.case02.case02 import (
+    usd,
+    base_charge,
+    bottom_band,
+    within_band,
+    top_band,
+)
 
 
 def test_usd():
@@ -19,7 +26,7 @@ def test_usd():
         (150, (100 * 0.03 + 50 * 0.05) * 1420),  # 하단 + 중단 밴드 사용
         (200, (100 * 0.03 + 100 * 0.05) * 1420),  # 하단 + 중단 밴드 최대 사용
         (300, (100 * 0.03 + 100 * 0.05 + 200 * 0.03) * 1420),  # 모든 밴드 사용
-    ]
+    ],
 )
 def test_base_charge(usage, expected):
     """기본 요금 계산 테스트"""
@@ -34,7 +41,7 @@ def test_base_charge(usage, expected):
         (100, 100),  # 하단 밴드 최대치
         (150, 100),  # 하단 밴드 초과
         (300, 100),  # 하단 밴드 초과
-    ]
+    ],
 )
 def test_bottom_band(usage, expected):
     """하단 밴드 계산 테스트"""
@@ -50,11 +57,11 @@ def test_bottom_band(usage, expected):
         (150, 50),  # 중단 밴드 내 사용
         (200, 100),  # 중단 밴드 최대치
         (300, 100),  # 중단 밴드 초과
-    ]
+    ],
 )
-def test_middle_band(usage, expected):
+def test_within_band(usage, expected):
     """중단 밴드 계산 테스트"""
-    assert middle_band(usage) == expected
+    assert within_band(usage, 100, 200) == expected
 
 
 @pytest.mark.parametrize(
@@ -65,7 +72,7 @@ def test_middle_band(usage, expected):
         (200, 0),  # 상단 밴드 시작점
         (201, 200),  # 상단 밴드 초과
         (300, 200),  # 상단 밴드 초과
-    ]
+    ],
 )
 def test_top_band(usage, expected):
     """상단 밴드 계산 테스트"""
