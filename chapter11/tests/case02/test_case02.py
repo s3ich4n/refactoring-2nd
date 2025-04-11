@@ -4,7 +4,6 @@ from chapter11.src.case02.case02 import (
     usd,
     base_charge,
     within_band,
-    top_band,
 )
 
 
@@ -24,7 +23,7 @@ def test_usd():
         (100, 100 * 0.03 * 1420),  # 하단 밴드 최대 사용
         (150, (100 * 0.03 + 50 * 0.05) * 1420),  # 하단 + 중단 밴드 사용
         (200, (100 * 0.03 + 100 * 0.05) * 1420),  # 하단 + 중단 밴드 최대 사용
-        (300, (100 * 0.03 + 100 * 0.05 + 200 * 0.03) * 1420),  # 모든 밴드 사용
+        (300, (100 * 0.03 + 100 * 0.05 + 100 * 0.07) * 1420),  # 모든 밴드 사용
     ],
 )
 def test_base_charge(usage, expected):
@@ -46,18 +45,3 @@ def test_base_charge(usage, expected):
 def test_within_band(usage, expected):
     """중단 밴드 계산 테스트"""
     assert within_band(usage, 100, 200) == expected
-
-
-@pytest.mark.parametrize(
-    "usage, expected",
-    [
-        (0, 0),  # 사용량 0
-        (100, 0),  # 상단 밴드 미만
-        (200, 0),  # 상단 밴드 시작점
-        (201, 200),  # 상단 밴드 초과
-        (300, 200),  # 상단 밴드 초과
-    ],
-)
-def test_top_band(usage, expected):
-    """상단 밴드 계산 테스트"""
-    assert top_band(usage) == expected
