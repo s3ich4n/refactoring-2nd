@@ -3,7 +3,6 @@ import pytest
 from chapter11.src.case02.case02 import (
     usd,
     base_charge,
-    bottom_band,
     within_band,
     top_band,
 )
@@ -31,21 +30,6 @@ def test_usd():
 def test_base_charge(usage, expected):
     """기본 요금 계산 테스트"""
     assert base_charge(usage) == expected
-
-
-@pytest.mark.parametrize(
-    "usage, expected",
-    [
-        (0, 0),  # 사용량 0
-        (50, 50),  # 하단 밴드 내 사용
-        (100, 100),  # 하단 밴드 최대치
-        (150, 100),  # 하단 밴드 초과
-        (300, 100),  # 하단 밴드 초과
-    ],
-)
-def test_bottom_band(usage, expected):
-    """하단 밴드 계산 테스트"""
-    assert bottom_band(usage) == expected
 
 
 @pytest.mark.parametrize(
