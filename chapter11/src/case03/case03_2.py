@@ -32,6 +32,14 @@ def delivery_date(order, is_rush):
     return result
 
 
+def rush_delivery_date(order):
+    return delivery_date(order, is_rush=True)
+
+
+def regular_delivery_date(order):
+    return delivery_date(order, is_rush=False)
+
+
 class Order:
     """주문 정보를 담는 클래스"""
 
