@@ -19,9 +19,9 @@ class TestEmployee:
 
     def test_type_property(self):
         """type 속성 테스트 - 타입 코드가 올바르게 변환되는지"""
-        engineer = Employee("Bob", "E")
-        manager = Employee("Alice", "M")
-        salesman = Employee("Charlie", "S")
+        engineer = Employee.create("Bob", "E")
+        manager = Employee.create("Alice", "M")
+        salesman = Employee.create("Charlie", "S")
 
         assert engineer.employee_type == "Engineer"
         assert manager.employee_type == "Manager"
