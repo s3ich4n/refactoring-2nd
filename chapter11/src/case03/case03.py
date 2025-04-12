@@ -13,21 +13,29 @@ def delivery_date(order, is_rush):
         datetime: 배송 예상 날짜
     """
     if is_rush:
-        if order.delivery_state in ["MA", "CT", "NY"]:
-            delivery_time = 1
-        elif order.delivery_state in ["NH"]:
-            delivery_time = 2
-        else:
-            delivery_time = 3
-        return order.placed_on + timedelta(days=1 + delivery_time)
+        return rush_delivery_date(order)
     else:
-        if order.delivery_state in ["MA", "CT", "NY"]:
-            delivery_time = 2
-        elif order.delivery_state in ["ME", "NH"]:
-            delivery_time = 3
-        else:
-            delivery_time = 4
-        return order.placed_on + timedelta(days=2 + delivery_time)
+        return regular_delivery_date(order)
+
+
+def rush_delivery_date(order):
+    if order.delivery_state in ["MA", "CT", "NY"]:
+        delivery_time = 1
+    elif order.delivery_state in ["NH"]:
+        delivery_time = 2
+    else:
+        delivery_time = 3
+    return order.placed_on + timedelta(days=1 + delivery_time)
+
+
+def regular_delivery_date(order):
+    if order.delivery_state in ["MA", "CT", "NY"]:
+        delivery_time = 2
+    elif order.delivery_state in ["ME", "NH"]:
+        delivery_time = 3
+    else:
+        delivery_time = 4
+    return order.placed_on + timedelta(days=2 + delivery_time)
 
 
 class Order:
