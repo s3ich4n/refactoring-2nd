@@ -14,7 +14,7 @@ class TestEmployee:
 
     def test_name_property(self):
         """name 속성 테스트"""
-        employee = Employee("Jane Smith", "M")
+        employee = Employee.create("Jane Smith", "M")
         assert employee.name == "Jane Smith"
 
     def test_type_property(self):
