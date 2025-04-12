@@ -1,14 +1,21 @@
 def score(candidate, medical_exam, scoring_guide):
-    return Scorer().execute(candidate, medical_exam, scoring_guide)
+    return Scorer(candidate).execute(medical_exam, scoring_guide)
 
 
 class Scorer:
-    def execute(self, candidate, medical_exam, scoring_guide):
+    def __init__(self, candidate):
+        """
+
+        Args:
+            candidate: 후보자 정보
+        """
+        self._candidate = candidate
+
+    def execute(self, medical_exam, scoring_guide):
         """
         점수를 계산하는 함수
 
         Args:
-            candidate: 후보자 정보
             medical_exam: 의료 검사 결과
             scoring_guide: 점수 가이드
 
@@ -24,7 +31,7 @@ class Scorer:
             high_medical_risk_flag = True
 
         certification_grade = "regular"
-        if scoring_guide.state_with_low_certification(candidate.origin_state):
+        if scoring_guide.state_with_low_certification(self._candidate.origin_state):
             certification_grade = "low"
             result -= 5
 
