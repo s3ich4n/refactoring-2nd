@@ -13,8 +13,10 @@ def test_within_range_within_limits():
     heating_plan = HeatingPlan(plan_range)
 
     # When / Then
-    assert heating_plan.within_range(18, 25) is True  # 정확히 범위와 일치
-    assert heating_plan.within_range(20, 22) is True  # 범위 내에 있음
+    # 정확히 범위와 일치
+    assert heating_plan.zz_neo_within_range(TempRange(18, 25)) is True
+    # 범위 내에 있음
+    assert heating_plan.zz_neo_within_range(TempRange(20, 22)) is True
 
 
 def test_within_range_outside_limits():
@@ -24,9 +26,11 @@ def test_within_range_outside_limits():
     heating_plan = HeatingPlan(plan_range)
 
     # When / Then
-    assert heating_plan.within_range(17, 25) is False  # 하한선 미만
-    assert heating_plan.within_range(18, 26) is False  # 상한선 초과
-    assert heating_plan.within_range(17, 26) is False  # 양쪽 모두 벗어남
+    assert heating_plan.zz_neo_within_range(TempRange(17, 25)) is False  # 하한선 미만
+    assert heating_plan.zz_neo_within_range(TempRange(18, 26)) is False  # 상한선 초과
+    assert (
+        heating_plan.zz_neo_within_range(TempRange(17, 26)) is False
+    )  # 양쪽 모두 벗어남
 
 
 def test_check_room_temperature_within_range():
