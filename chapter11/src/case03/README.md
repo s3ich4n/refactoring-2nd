@@ -75,4 +75,6 @@ premium_book_concert(a_customer)
 
 ## 예시
 
-예시 1은 조건문 분해부터.
+예시 1은 조건문 분해부터. 많은 일을 하던 `delivery_date`의 일을 쪼갠다.
+
+그담엔 개별 메소드로 테스트를 분리하고,
