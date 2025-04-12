@@ -19,7 +19,7 @@ class HeatingPlan:
     def __init__(self, temperature_range):
         self.temperature_range = temperature_range
 
-    def zz_neo_within_range(self, a_number_range: TempRange):
+    def within_range(self, a_number_range: TempRange):
         return (a_number_range.low >= self.temperature_range.low) and (
             a_number_range.high <= self.temperature_range.high
         )
@@ -27,5 +27,5 @@ class HeatingPlan:
 
 def check_room_temperature(room, plan, alerts):
     """방 온도가 계획의 범위를 벗어났는지 확인하고 경고를 추가"""
-    if not plan.zz_neo_within_range(room.days_temp_range):
+    if not plan.within_range(room.days_temp_range):
         alerts.append("room temperature went outside range")
