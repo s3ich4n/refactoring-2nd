@@ -9,17 +9,7 @@ class HeatingPlan:
         self.min = min_temp
         self.max = max_temp
 
-    def target_temperature(self):
-        selected_temperature = thermostat.selected_temperature
-
-        if selected_temperature > self.max:
-            return self.max
-        elif selected_temperature < self.min:
-            return self.min
-        else:
-            return selected_temperature
-
-    def xx_neo_target_temperature(self, selected_temperature):
+    def target_temperature(self, selected_temperature):
         if selected_temperature > self.max:
             return self.max
         elif selected_temperature < self.min:
@@ -31,12 +21,12 @@ class HeatingPlan:
 # 클라이언트 코드
 def adjust_temperature(thermostat, the_plan):
     if (
-        the_plan.xx_neo_target_temperature(thermostat.selected_temperature)
+        the_plan.target_temperature(thermostat.selected_temperature)
         > thermostat.current_temperature
     ):
         set_to_heat()
     elif (
-        the_plan.xx_neo_target_temperature(thermostat.selected_temperature)
+        the_plan.target_temperature(thermostat.selected_temperature)
         < thermostat.current_temperature
     ):
         set_to_cool()
@@ -54,7 +44,3 @@ def set_to_cool():
 
 def set_off():
     print("온도 조절 시스템 끄기")
-
-
-# 전역 변수 thermostat - 원래 자바스크립트 코드의 전역 참조를 모방
-thermostat: Thermostat | None = None
