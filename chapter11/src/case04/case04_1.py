@@ -20,12 +20,8 @@ class HeatingPlan:
         self.temperature_range = temperature_range
 
     def zz_neo_within_range(self, a_number_range: TempRange):
-        return self.within_range(a_number_range.low, a_number_range.high)
-
-    def within_range(self, bottom, top):
-        """주어진 범위가 계획의 온도 범위 내에 있는지 확인"""
-        return (bottom >= self.temperature_range.low) and (
-            top <= self.temperature_range.high
+        return (a_number_range.low >= self.temperature_range.low) and (
+            a_number_range.high <= self.temperature_range.high
         )
 
 
