@@ -20,17 +20,13 @@ class HeatingPlan:
         self.temperature_range = temperature_range
 
     def xx_neo_within_range(self, temp_range):
-        low = temp_range.low
-        high = temp_range.high
-
-        is_within_range = self.within_range(low, high)
-        return is_within_range
+        return (temp_range.low >= self.temperature_range.low) and (
+            temp_range.high <= self.temperature_range.high
+        )
 
     def within_range(self, bottom, top):
         """주어진 범위가 계획의 온도 범위 내에 있는지 확인"""
-        return (bottom >= self.temperature_range.low) and (
-            top <= self.temperature_range.high
-        )
+        return
 
 
 def check_room_temperature(room, plan, alerts):
