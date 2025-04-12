@@ -6,7 +6,6 @@ from datetime import (
 import pytest
 
 from chapter11.src.case03.case03 import (
-    delivery_date,
     Order,
     rush_delivery_date,
     regular_delivery_date,
@@ -91,8 +90,8 @@ def test_empty_state(base_date):
 
     # When/Then
     # 빈 문자열은 어떤 조건에도 포함되지 않으므로 'else' 케이스에 해당
-    result = delivery_date(order, True)
+    result = rush_delivery_date(order)
     assert result == base_date + timedelta(days=4)  # 3일 처리 + 1일 배송
 
-    result = delivery_date(order, False)
+    result = regular_delivery_date(order)
     assert result == base_date + timedelta(days=6)  # 4일 처리 + 2일 배송
