@@ -31,7 +31,5 @@ class HeatingPlan:
 
 def check_room_temperature(room, plan, alerts):
     """방 온도가 계획의 범위를 벗어났는지 확인하고 경고를 추가"""
-    low = room.days_temp_range.low
-    high = room.days_temp_range.high
     if not plan.zz_neo_within_range(room.days_temp_range):
         alerts.append("room temperature went outside range")
