@@ -55,3 +55,13 @@ def target_temperature(a_plan, current_temperature):
 5. 새 함수의 이름을 원래 함수 이름으로 고친다
 
 ## 예시
+
+> ![NOTES]
+> 
+> 이 리팩터링을 하면 호출하는 쪽은 전보다 더 어려워진다.
+> '의존성을 모듈 바깥으로 빼낸다'는 의존성의 책임을 호출하는 쪽이 알아야 된다란 것이다.
+> 
+> 다만 이걸 하면 얻는 장점은 아래와 같다:
+> 
+>   1. `HeatingPlan` 클래스의 불변화
+>   2. `target_temperature()` 메소드의 참조투명화
