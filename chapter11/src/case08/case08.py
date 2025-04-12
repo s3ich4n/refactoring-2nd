@@ -3,6 +3,17 @@ class Employee:
         self._name = name
         self._type_code = type_code
 
+    @classmethod
+    def create(
+        cls,
+        name,
+        type_code,
+    ):
+        return cls(
+            name,
+            type_code,
+        )
+
     @property
     def name(self):
         return self._name

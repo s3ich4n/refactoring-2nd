@@ -8,7 +8,7 @@ class TestEmployee:
 
     def test_create_employee(self):
         """Employee 객체 생성 테스트"""
-        employee = Employee("John Doe", "E")
+        employee = Employee.create("John Doe", "E")
         assert employee._name == "John Doe"
         assert employee._type_code == "E"
 
