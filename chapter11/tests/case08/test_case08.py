@@ -39,7 +39,7 @@ class TestEmployee:
 
     def test_invalid_type_code(self):
         """유효하지 않은 타입 코드 처리 테스트"""
-        employee = Employee("Invalid", "X")
+        employee = Employee.create("Invalid", "X")
 
         # 유효하지 않은 타입 코드를 사용하면 KeyError가 발생해야 함
         with pytest.raises(KeyError):
