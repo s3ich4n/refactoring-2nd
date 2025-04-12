@@ -9,10 +9,11 @@ class Employee:
         name,
         type_code,
     ):
-        return cls(
-            name,
-            type_code,
-        )
+        return cls(name=name, type_code=type_code)
+
+    @classmethod
+    def create_engineer(cls, name):
+        return cls(name=name, type_code="E")
 
     @property
     def name(self):

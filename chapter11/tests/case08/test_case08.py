@@ -6,6 +6,12 @@ from chapter11.src.case08.case08 import Employee
 class TestEmployee:
     """Employee 클래스 테스트"""
 
+    def test_create_engineer(self):
+        """Employee 객체 생성 테스트"""
+        employee = Employee.create_engineer("Jane Doe")
+        assert employee._name == "Jane Doe"
+        assert employee._type_code == "E"
+
     def test_create_employee(self):
         """Employee 객체 생성 테스트"""
         employee = Employee.create("John Doe", "E")
