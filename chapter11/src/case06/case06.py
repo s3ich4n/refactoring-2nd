@@ -10,12 +10,14 @@ class HeatingPlan:
         self.max = max_temp
 
     def target_temperature(self):
-        if thermostat.selected_temperature > self.max:
+        selected_temperature = thermostat.selected_temperature
+
+        if selected_temperature > self.max:
             return self.max
-        elif thermostat.selected_temperature < self.min:
+        elif selected_temperature < self.min:
             return self.min
         else:
-            return thermostat.selected_temperature
+            return selected_temperature
 
 
 # 클라이언트 코드
@@ -41,4 +43,4 @@ def set_off():
 
 
 # 전역 변수 thermostat - 원래 자바스크립트 코드의 전역 참조를 모방
-thermostat = None
+thermostat: Thermostat | None = None
