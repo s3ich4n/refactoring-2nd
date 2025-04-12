@@ -16,7 +16,7 @@ class TestScore:
         scoring_guide.state_with_low_certification.return_value = True
 
         # 함수 실행
-        result = Scorer(candidate, medical_exam).execute(scoring_guide)
+        result = Scorer(candidate, medical_exam, scoring_guide).execute()
 
         # 기대 결과: -5(낮은 인증) - 5(건강 수준 10-5) = -10
         assert result == -10
@@ -33,7 +33,7 @@ class TestScore:
         scoring_guide.state_with_low_certification.return_value = False
 
         # 함수 실행
-        result = Scorer(candidate, medical_exam).execute(scoring_guide)
+        result = Scorer(candidate, medical_exam, scoring_guide).execute()
 
         # 기대 결과: 0(기본 점수) - 0(건강 수준 0-5, 음수이므로 max는 0) = 0
         assert result == 0
@@ -50,7 +50,7 @@ class TestScore:
         scoring_guide.state_with_low_certification.return_value = False
 
         # 함수 실행
-        result = Scorer(candidate, medical_exam).execute(scoring_guide)
+        result = Scorer(candidate, medical_exam, scoring_guide).execute()
 
         # 기대 결과: 0(기본 점수) - 5(건강 수준 10-5) = -5
         assert result == -5
