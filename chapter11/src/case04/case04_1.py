@@ -19,6 +19,8 @@ class HeatingPlan:
     def __init__(self, temperature_range):
         self.temperature_range = temperature_range
 
+    def neo_within_range(self, a_number_range: TempRange): ...
+
     def within_range(self, bottom, top):
         """주어진 범위가 계획의 온도 범위 내에 있는지 확인"""
         return (bottom >= self.temperature_range.low) and (
