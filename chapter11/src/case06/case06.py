@@ -19,12 +19,26 @@ class HeatingPlan:
         else:
             return selected_temperature
 
+    def xx_neo_target_temperature(self, selected_temperature):
+        if selected_temperature > self.max:
+            return self.max
+        elif selected_temperature < self.min:
+            return self.min
+        else:
+            return selected_temperature
+
 
 # 클라이언트 코드
 def adjust_temperature(thermostat, the_plan):
-    if the_plan.target_temperature() > thermostat.current_temperature:
+    if (
+        the_plan.xx_neo_target_temperature(thermostat.selected_temperature)
+        > thermostat.current_temperature
+    ):
         set_to_heat()
-    elif the_plan.target_temperature() < thermostat.current_temperature:
+    elif (
+        the_plan.xx_neo_target_temperature(thermostat.selected_temperature)
+        < thermostat.current_temperature
+    ):
         set_to_cool()
     else:
         set_off()
