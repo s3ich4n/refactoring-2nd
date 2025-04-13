@@ -17,16 +17,6 @@ class ChargeCalculator:
         self._provider = provider
 
     @property
-    def base_charge(self):
-        """
-        기본 요금 계산
-
-        Returns:
-            float: 계산된 기본 요금
-        """
-        return self._customer.base_rate * self._usage
-
-    @property
     def charge(self):
         """
         총 요금 계산
@@ -34,5 +24,5 @@ class ChargeCalculator:
         Returns:
             float: 계산된 총 요금
         """
-        base_charge = self.base_charge
+        base_charge = self._customer.base_rate * self._usage
         return base_charge + self._provider.connection_charge
