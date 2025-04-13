@@ -25,11 +25,14 @@ class ResourcePool:
         Returns:
             Resource: 할당된 리소스
         """
-        try:
-            result = self.available.pop()  # pop은 deque가 비어있으면 IndexError 발생
-            self.allocated.append(result)
-        except IndexError:
+        if not self.available:
             result = Resource.create()
             self.allocated.append(result)
+        else:
+            try:
+                result = self.available.pop()
+                self.allocated.append(result)
+            except IndexError:
+                ...
 
         return result
