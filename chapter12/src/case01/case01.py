@@ -7,7 +7,7 @@ class Department(Party):
     def __init__(self):
         super().__init__()
 
-    def total_annual_cost(self):
+    def annual_cost(self):
         return self.monthly_cost * 12
 
 
