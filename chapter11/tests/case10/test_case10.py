@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from chapter11.src.case10.case10 import ChargeCalculator
+from chapter11.src.case10.case10 import charge
 
 
 class TestChargeCalculator:
@@ -14,13 +14,8 @@ class TestChargeCalculator:
         provider = MagicMock()
         provider.connection_charge = 15.0
 
-        # ChargeCalculator 인스턴스 생성
-        calculator = ChargeCalculator()
-
         # 총 요금 계산 테스트
-        assert (
-            calculator.charge(customer, usage, provider) == 65.0
-        )  # (10.0 * 5.0) + 15.0
+        assert charge(customer, usage, provider) == 65.0  # (10.0 * 5.0) + 15.0
 
     def test_with_different_values(self):
         # 다른 값으로 테스트
@@ -32,10 +27,5 @@ class TestChargeCalculator:
         provider = MagicMock()
         provider.connection_charge = 20.0
 
-        # ChargeCalculator 인스턴스 생성
-        calculator = ChargeCalculator()
-
         # 총 요금 계산 테스트
-        assert (
-            calculator.charge(customer, usage, provider) == 80.0
-        )  # (7.5 * 8.0) + 20.0
+        assert charge(customer, usage, provider) == 80.0  # (7.5 * 8.0) + 20.0
