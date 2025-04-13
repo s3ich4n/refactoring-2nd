@@ -10,6 +10,10 @@ class Employee:
         # 차량 할당 로직
         pass
 
+    def finish_construction(self):
+        if self.is_privileged:
+            self.assign_car()
+
 
 class Manager(Employee):
     def __init__(self, name, grade):
@@ -20,7 +24,3 @@ class Manager(Employee):
     @property
     def is_privileged(self):
         return self._grade > 4
-
-    def finish_construction(self):
-        if self.is_privileged:
-            self.assign_car()
