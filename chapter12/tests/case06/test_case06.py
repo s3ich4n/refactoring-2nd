@@ -1,7 +1,10 @@
 # pytest 테스트 코드
 import pytest
 
-from chapter12.src.case06.case06 import Employee
+from chapter12.src.case06.case06 import (
+    Employee,
+    Engineer,
+)
 
 
 @pytest.mark.parametrize(
@@ -35,3 +38,7 @@ def test_employee_string_representation():
 
     employee = Employee("Bob Johnson", "salesman")
     assert str(employee) == "Bob Johnson (salesman)"
+
+
+def test_engineer_creation():
+    engineer = Engineer(name="<NAME>", employee_type="engineer")
