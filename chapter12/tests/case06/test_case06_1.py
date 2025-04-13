@@ -1,9 +1,7 @@
 # pytest 테스트 코드
 import pytest
 
-from chapter12.src.case06.case06 import (
-    Employee,
-)
+from chapter12.src.case06.case06_1 import Employee
 
 
 @pytest.mark.parametrize(
