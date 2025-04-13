@@ -1,7 +1,10 @@
+import pytest
+
 from chapter11.src.case12.case12 import (
     local_shipping_rules,
     ShippingRules,
     CountryData,
+    CountryNotFoundException,
 )
 
 
@@ -27,19 +30,25 @@ class TestLocalShippingRules:
         assert result.data == {"tax": 0.07, "shipping_cost": 15}
 
         # 다른 국가 코드로 테스트
+
         result = local_shipping_rules("UK", self.country_data)
         assert isinstance(result, ShippingRules)
         assert result.data == {"tax": 0.20, "shipping_cost": 25}
 
-    def test_local_shipping_rules_with_nonexistent_country(self):
+    @pytest.mark.parametrize(
+        "wrong_country",
+        [
+            pytest.param("FR"),
+            pytest.param(""),
+            pytest.param(None),
+        ],
+    )
+    def test_local_shipping_rules_with_wrong_country_values(self, wrong_country):
         """존재하지 않는 국가 코드에 대한 테스트"""
         # 존재하지 않는 국가 코드로 테스트 - 예외가 발생해야 함
-        assert -23 == local_shipping_rules("FR", self.country_data)
+        with pytest.raises(CountryNotFoundException) as excinfo:
+            local_shipping_rules(wrong_country, self.country_data)
 
-    def test_local_shipping_rules_with_empty_country(self):
-        """빈 국가 코드에 대한 테스트"""
-        assert -23 == local_shipping_rules("", self.country_data)
-
-    def test_local_shipping_rules_with_none_country(self):
-        """None 국가 코드에 대한 테스트"""
-        assert -23 == local_shipping_rules(None, self.country_data)
+        assert f"국가 '{wrong_country}'에 대한 배송 규칙을 찾을 수 없습니다." in str(
+            excinfo.value
+        )

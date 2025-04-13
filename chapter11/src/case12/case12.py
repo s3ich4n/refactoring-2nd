@@ -1,3 +1,7 @@
+class CountryNotFoundException(Exception):
+    pass
+
+
 class ShippingRules:
     """배송 규칙을 나타내는 클래스"""
 
@@ -29,9 +33,12 @@ def local_shipping_rules(country, country_data):
 
     Returns:
         ShippingRules: 해당 국가의 배송 규칙
+
     """
     data = country_data.shipping_rules.get(country)
     if data:
         return ShippingRules(data)
     else:
-        return -23
+        raise CountryNotFoundException(
+            f"국가 '{country}'에 대한 배송 규칙을 찾을 수 없습니다."
+        )
