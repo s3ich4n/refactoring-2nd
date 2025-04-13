@@ -25,11 +25,7 @@ class ResourcePool:
         Returns:
             Resource: 할당된 리소스
         """
-        if not self.available:
-            result = Resource.create()
-            self.allocated.append(result)
-        else:
-            result = self.available.pop()
-            self.allocated.append(result)
+        result = Resource.create() if not self.available else self.available.pop()
+        self.allocated.append(result)
 
         return result
