@@ -6,7 +6,7 @@ _Replace Conditional with Polymorphism_
 
 Before
 
-> ![NOTES]
+> [!NOTES]
 > `switch` clause가 없어서 이렇게 대체합니다
 
 

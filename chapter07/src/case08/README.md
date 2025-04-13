@@ -28,7 +28,7 @@ manager = a_person.department.manager
 다만 이러면 위임 객체의 다른 기능을 쓰려고 할 때마다 서버에 위임 메소드를 둬야한다.
 이게 심해지면 서버 클래스는 중개자(_middle man_)으로 전락한다. 자꾸 이렇게 되면 클라이언트가 위임 객체를 직접 부르는게 낫다.
 
-> ![WARNING]
+> [!WARNING]
 >
 > 이런 코드는 Law of Demeter 를 너무 신봉하면 생긴다.
 > 내부정보를 과도하게 숨기면 wrapper가 늘어나는 단점이 생긴다.
