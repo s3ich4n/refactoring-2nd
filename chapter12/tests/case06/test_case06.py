@@ -4,23 +4,25 @@ import pytest
 from chapter12.src.case06.case06 import Employee
 
 
-def test_employee_creation_with_valid_types():
+@pytest.mark.parametrize(
+    "employee_type, is_problem",
+    [
+        pytest.param("engineer", False, id="(valid) engineer"),
+        pytest.param("manager", False, id="(valid) manager"),
+        pytest.param("student", True, id="(invalid) student"),
+    ],
+)
+def test_employee_creation_with_valid_types(employee_type, is_problem):
     """유효한 타입으로 직원을 생성할 수 있는지 테스트"""
-    valid_types = ["engineer", "manager", "salesman"]
-
-    for type in valid_types:
-        employee = Employee("Test Employee", type)
+    if is_problem:
+        with pytest.raises(ValueError) as excinfo:
+            _ = Employee("Test Employee", employee_type)
+            assert f"Employee cannot be of type {employee_type}" in str(excinfo.value)
+    else:
+        employee = Employee("Test Employee", employee_type)
         assert employee._name == "Test Employee"
-        assert employee._type == type
-        assert str(employee) == f"Test Employee ({type})"
-
-
-def test_employee_creation_with_invalid_type():
-    """유효하지 않은 타입으로 직원을 생성할 때 예외가 발생하는지 테스트"""
-    with pytest.raises(ValueError) as excinfo:
-        Employee("Test Employee", "developer")
-
-    assert "Employee cannot be of type developer" in str(excinfo.value)
+        assert employee.employee_type == employee_type
+        assert str(employee) == f"Test Employee ({employee_type})"
 
 
 def test_employee_string_representation():
