@@ -19,10 +19,26 @@ class Employee:
     def create(cls, name, employee_type):
         if employee_type == "engineer":
             return Engineer(name, "engineer")
+        elif employee_type == "manager":
+            return Manager(name, "manager")
+        elif employee_type == "salesperson":
+            return Salesperson(name, "salesman")
 
 
 class Engineer(Employee):
     @property
     def employee_type(self):
         # 일부러 잘 받아오는지 고장내기
-        return "engineedddfefefer"
+        return "engineer"
+
+
+class Manager(Employee):
+    @property
+    def employee_type(self):
+        return "manager"
+
+
+class Salesperson(Employee):
+    @property
+    def employee_type(self):
+        return "salesperson"
