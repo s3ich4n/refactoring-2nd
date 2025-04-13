@@ -14,3 +14,14 @@ class Employee:
 
     def __str__(self):
         return f"{self._name} ({self._employee_type})"
+
+    @classmethod
+    def create(cls, name, employee_type):
+        if employee_type == "engineer":
+            return Engineer(name, "engineer")
+
+
+class Engineer(Employee):
+    @property
+    def employee_type(self):
+        return "engineer"
