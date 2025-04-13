@@ -40,7 +40,7 @@ if is_not_eligible_for_disability(an_employee):
 
 함수 추출하기를 하면 "무엇을" 하는지 포함하기도 쉽고 "왜" 하는지도 쉽게 풀 수 있다.
 
-> ![CAUTION]
+> [!CAUTION]
 > 진짜 독립된 검사를 해야한다면 이 리팩터링을 쓰면 안 된다.
 > 
 > 그건 진짜로 나눠야하는 케이스니까.
