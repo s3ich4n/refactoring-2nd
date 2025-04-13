@@ -8,10 +8,6 @@ class Employee:
         if arg not in ["engineer", "manager", "salesman"]:
             raise ValueError(f"Employee cannot be of type {arg}")
 
-    @property
-    def employee_type(self):
-        return self._employee_type
-
     def __str__(self):
         return f"{self._name} ({self._employee_type})"
 
@@ -23,6 +19,8 @@ class Employee:
             return Manager(name, "manager")
         elif employee_type == "salesperson":
             return Salesperson(name, "salesman")
+        else:
+            raise NotImplementedError(f"Employee cannot be of type {employee_type}")
 
 
 class Engineer(Employee):
