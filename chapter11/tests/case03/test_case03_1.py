@@ -5,7 +5,7 @@ from datetime import (
 
 import pytest
 
-from chapter11.src.case03.case03 import (
+from chapter11.src.case03.case03_1 import (
     Order,
     rush_delivery_date,
     regular_delivery_date,
