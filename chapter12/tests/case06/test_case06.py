@@ -42,3 +42,19 @@ def test_employee_string_representation():
 
 def test_engineer_creation():
     engineer = Engineer(name="<NAME>", employee_type="engineer")
+
+    """
+    잘 고장났음ㅋㅋ
+    =================================== FAILURES ===================================
+    ____________________________ test_engineer_creation ____________________________
+    
+        def test_engineer_creation():
+            engineer = Engineer(name="<NAME>", employee_type="engineer")
+        
+    >       assert engineer.employee_type == "engineer"
+    E       AssertionError: assert 'engineedddfefefer' == 'engineer'
+    E         
+    E         - engineer
+    E         + engineedddfefefer
+    """
+    assert engineer.employee_type == "engineer"
