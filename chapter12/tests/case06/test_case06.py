@@ -17,11 +17,11 @@ from chapter12.src.case06.case06 import (
 def test_employee_creation_with_valid_types(employee_type, is_problem):
     """유효한 타입으로 직원을 생성할 수 있는지 테스트"""
     if is_problem:
-        with pytest.raises(ValueError) as excinfo:
-            _ = Employee("Test Employee", employee_type)
+        with pytest.raises(NotImplementedError) as excinfo:
+            _ = Employee.create("Test Employee", employee_type)
             assert f"Employee cannot be of type {employee_type}" in str(excinfo.value)
     else:
-        employee = Employee("Test Employee", employee_type)
+        employee = Employee.create("Test Employee", employee_type)
         assert employee._name == "Test Employee"
         assert employee.employee_type == employee_type
         assert str(employee) == f"Test Employee ({employee_type})"
