@@ -24,19 +24,19 @@ def test_employee_creation_with_valid_types(employee_type, is_problem):
         employee = Employee.create("Test Employee", employee_type)
         assert employee._name == "Test Employee"
         assert employee.employee_type == employee_type
-        assert str(employee) == f"Test Employee ({employee_type})"
+        assert str(employee) == f"{employee_type.capitalize()} - Test Employee"
 
 
 def test_employee_string_representation():
     """직원의 문자열 표현이 올바른지 테스트"""
-    employee = Employee("John Doe", "engineer")
-    assert str(employee) == "John Doe (engineer)"
+    employee = Employee.create("John Doe", "engineer")
+    assert str(employee) == "Engineer - John Doe"
 
-    employee = Employee("Jane Smith", "manager")
-    assert str(employee) == "Jane Smith (manager)"
+    employee = Employee.create("Jane Smith", "manager")
+    assert str(employee) == "Manager - Jane Smith"
 
-    employee = Employee("Bob Johnson", "salesman")
-    assert str(employee) == "Bob Johnson (salesman)"
+    employee = Employee.create("Bob Johnson", "salesperson")
+    assert str(employee) == "Salesperson - Bob Johnson"
 
 
 def test_engineer_creation():
