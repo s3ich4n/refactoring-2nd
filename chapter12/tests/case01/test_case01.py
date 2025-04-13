@@ -8,11 +8,11 @@ class TestPullUpMethod:
 
         # 기본 monthly_cost는 10
         assert department.monthly_cost == 10
-        assert department.total_annual_cost() == 120  # 10 * 12
+        assert department.annual_cost() == 120  # 10 * 12
 
         # monthly_cost 변경 시 annual_cost도 변경되어야 함
         department.monthly_cost = 20
-        assert department.total_annual_cost() == 240  # 20 * 12
+        assert department.annual_cost() == 240  # 20 * 12
 
     def test_employee_annual_cost(self):
         """Employee 클래스의 annual_cost 메서드가 올바르게 계산되는지 테스트"""
@@ -36,9 +36,9 @@ class TestPullUpMethod:
         employee.monthly_cost = 30
 
         # 두 클래스의 annual_cost 결과가 동일해야 함
-        assert department.total_annual_cost() == employee.annual_cost()
+        assert department.annual_cost() == employee.annual_cost()
 
         # monthly_cost를 변경해도 동일성이 유지되어야 함
         department.monthly_cost = 50
         employee.monthly_cost = 50
-        assert department.total_annual_cost() == employee.annual_cost()
+        assert department.annual_cost() == employee.annual_cost()
