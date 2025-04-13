@@ -15,7 +15,7 @@ class TestChargeCalculator:
         provider.connection_charge = 15.0
 
         # ChargeCalculator 인스턴스 생성
-        calculator = ChargeCalculator(provider)
+        calculator = ChargeCalculator()
 
         # 총 요금 계산 테스트
         assert (
@@ -33,7 +33,7 @@ class TestChargeCalculator:
         provider.connection_charge = 20.0
 
         # ChargeCalculator 인스턴스 생성
-        calculator = ChargeCalculator(provider)
+        calculator = ChargeCalculator()
 
         # 총 요금 계산 테스트
         assert (
