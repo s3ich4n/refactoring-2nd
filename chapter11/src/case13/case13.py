@@ -29,10 +29,7 @@ class ResourcePool:
             result = Resource.create()
             self.allocated.append(result)
         else:
-            try:
-                result = self.available.pop()
-                self.allocated.append(result)
-            except IndexError:
-                raise AssertionError("you cannot reach here!")
+            result = self.available.pop()
+            self.allocated.append(result)
 
         return result
