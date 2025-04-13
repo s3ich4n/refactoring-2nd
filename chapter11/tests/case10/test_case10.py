@@ -18,7 +18,9 @@ class TestChargeCalculator:
         calculator = ChargeCalculator(customer, usage, provider)
 
         # 총 요금 계산 테스트
-        assert calculator.charge == 65.0  # (10.0 * 5.0) + 15.0
+        assert (
+            calculator.charge(customer, usage, provider) == 65.0
+        )  # (10.0 * 5.0) + 15.0
 
     def test_with_different_values(self):
         # 다른 값으로 테스트
@@ -34,4 +36,6 @@ class TestChargeCalculator:
         calculator = ChargeCalculator(customer, usage, provider)
 
         # 총 요금 계산 테스트
-        assert calculator.charge == 80.0  # (7.5 * 8.0) + 20.0
+        assert (
+            calculator.charge(customer, usage, provider) == 80.0
+        )  # (7.5 * 8.0) + 20.0

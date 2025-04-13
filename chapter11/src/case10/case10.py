@@ -16,8 +16,7 @@ class ChargeCalculator:
         self._usage = usage
         self._provider = provider
 
-    @property
-    def charge(self):
+    def charge(self, customer, usage, provider):
         """
         총 요금 계산
 
