@@ -24,4 +24,5 @@ class Employee:
 class Engineer(Employee):
     @property
     def employee_type(self):
-        return "engineer"
+        # 일부러 잘 받아오는지 고장내기
+        return "engineedddfefefer"
