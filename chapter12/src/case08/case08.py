@@ -1,9 +1,15 @@
-class Party: ...
+class Party:
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
 
 
-class Employee:
+class Employee(Party):
     def __init__(self, name, employee_id, monthly_cost):
-        super().__init__()
+        super().__init__(name)
         self._employee_id = employee_id
         self._name = name
         self._monthly_cost = monthly_cost
@@ -11,10 +17,6 @@ class Employee:
     @property
     def monthly_cost(self):
         return self._monthly_cost
-
-    @property
-    def name(self):
-        return self._name
 
     @property
     def employee_id(self):
@@ -25,19 +27,15 @@ class Employee:
         return self.monthly_cost * 12
 
 
-class Department:
+class Department(Party):
     def __init__(self, name, staff):
-        super().__init__()
+        super().__init__(name)
         self._name = name
         self._staff = staff
 
     @property
     def staff(self):
         return self._staff.copy()
-
-    @property
-    def name(self):
-        return self._name
 
     @property
     def total_monthly_cost(self):
