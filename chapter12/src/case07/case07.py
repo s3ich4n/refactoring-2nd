@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class User:
     gender: str
-    name: str
+    name: str | None
 
 
 class Person:
@@ -48,13 +48,7 @@ def load_from_input(data):
     """데이터 리스트에서 Person 객체 리스트를 생성합니다."""
     result = []
     for record in data:
-        if record.get("gender") == "M":
-            p = Male(record["name"])
-        elif record.get("gender") == "F":
-            p = Female(record["name"])
-        else:
-            p = Person(record["name"])
-        result.append(p)
+        result.append(create_person(record))
     return result
 
 
