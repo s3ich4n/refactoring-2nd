@@ -5,7 +5,7 @@ def test_employee_creation():
     # 직원 객체 생성 및 기본 속성 테스트
     emp = Employee("홍길동", "E123", 5000000)
     assert emp.name == "홍길동"
-    assert emp.id == "E123"
+    assert emp.employee_id == "E123"
     assert emp.monthly_cost == 5000000
 
 
