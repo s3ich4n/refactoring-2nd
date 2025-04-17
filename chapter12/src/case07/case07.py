@@ -8,8 +8,13 @@ class User:
 
 
 class Person:
-    def __init__(self, name):
+    def __init__(
+        self,
+        name,
+        gender_code,
+    ):
         self._name = name
+        self._gender_code = gender_code
 
     @property
     def name(self):
@@ -17,25 +22,24 @@ class Person:
 
     @property
     def gender_code(self):
-        return "X"
+        return self._gender_code
 
     @classmethod
-    def create_person(cls, name):
-        return cls(name)
+    def create_person(
+        cls,
+        name,
+        gender_code: str = "X",
+    ):
+        return cls(name, gender_code)
 
-    @staticmethod
-    def is_male(other):
-        return isinstance(other, Male)
+    def is_male(self):
+        return isinstance(self, Male)
 
 
 class Male(Person):
     @property
     def gender_code(self):
-        return "M"
-
-    @classmethod
-    def create_male(cls, name):
-        return cls(name)
+        return self._gender_code
 
 
 class Female(Person):
@@ -43,26 +47,23 @@ class Female(Person):
     def gender_code(self):
         return "F"
 
-    @classmethod
-    def create_female(cls, name):
-        return cls(name)
-
 
 def load_from_input(data):
     """데이터 리스트에서 Person 객체 리스트를 생성합니다."""
     result = []
     number_of_males = 0
     for record in data:
-        if record.is_male():
+        queried = create_person(record)
+        if queried.is_male():
             number_of_males += 1
-        result.append(create_person(record))
+        result.append(queried)
     return result
 
 
 def create_person(user: User):
     if user.gender == "M":
-        return Male.create_male(user.name)
+        return Person.create_person(user.name, "M")
     elif user.gender == "F":
-        return Female.create_female(user.name)
+        return Person.create_person(user.name, "F")
     else:
         return Person.create_person(user.name)

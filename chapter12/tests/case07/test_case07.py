@@ -9,14 +9,14 @@ from chapter12.src.case07.case07 import (
 
 def test_person_class():
     # 기본 Person 클래스 테스트
-    person = Person("홍길동")
+    person = Person.create_person("홍길동")
     assert person.name == "홍길동"
     assert person.gender_code == "X"
 
 
 def test_male_class():
     # Male 서브클래스 테스트
-    male = Male("김철수")
+    male = Male.create_person("김철수", "M")
     assert male.name == "김철수"
     assert male.gender_code == "M"
 
@@ -26,7 +26,7 @@ def test_male_class():
 
 def test_female_class():
     # Female 서브클래스 테스트
-    female = Female("이영희")
+    female = Female.create_person("이영희", "F")
     assert female.name == "이영희"
     assert female.gender_code == "F"
 
@@ -36,7 +36,11 @@ def test_female_class():
 
 def test_polymorphism():
     # 다형성 테스트
-    people = [Person("익명"), Male("홍길동"), Female("성춘향")]
+    people = [
+        Person.create_person("익명"),
+        Person.create_person("홍길동", "M"),
+        Person.create_person("성춘향", "F"),
+    ]
 
     expected_codes = ["X", "M", "F"]
 
@@ -55,8 +59,8 @@ def test_load_from_input():
     people = load_from_input(test_data)
 
     assert len(people) == 3
-    assert isinstance(people[0], Male)
-    assert isinstance(people[1], Female)
+    assert isinstance(people[0], Person)
+    assert isinstance(people[1], Person)
     assert isinstance(people[2], Person)
     assert people[0].name == "김철수"
     assert people[1].name == "이영희"
