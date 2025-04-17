@@ -3,6 +3,7 @@ from chapter12.src.case07.case07 import (
     Male,
     Female,
     load_from_input,
+    User,
 )
 
 
@@ -46,9 +47,9 @@ def test_polymorphism():
 def test_load_from_input():
     # 원본 로드 함수 테스트
     test_data = [
-        {"name": "김철수", "gender": "M"},
-        {"name": "이영희", "gender": "F"},
-        {"name": "무명", "gender": None},
+        User(name="김철수", gender="M"),
+        User(name="이영희", gender="F"),
+        User(name="무명", gender=None),
     ]
 
     people = load_from_input(test_data)
