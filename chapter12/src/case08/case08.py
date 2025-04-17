@@ -38,7 +38,7 @@ class Department(Party):
         return self._staff.copy()
 
     @property
-    def total_monthly_cost(self):
+    def monthly_cost(self):
         return sum(e.monthly_cost for e in self.staff)
 
     @property
@@ -46,5 +46,5 @@ class Department(Party):
         return len(self.staff)
 
     @property
-    def total_annual_cost(self):
-        return self.total_monthly_cost * 12
+    def annual_cost(self):
+        return self.monthly_cost * 12

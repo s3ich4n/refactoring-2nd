@@ -47,7 +47,7 @@ def test_department_total_monthly_cost():
     dept = Department("개발팀", [emp1, emp2, emp3])
     expected_monthly_cost = 5000000 + 4000000 + 6000000
 
-    assert dept.total_monthly_cost == expected_monthly_cost
+    assert dept.monthly_cost == expected_monthly_cost
 
 
 def test_department_total_annual_cost():
@@ -59,7 +59,7 @@ def test_department_total_annual_cost():
     expected_monthly_cost = 5000000 + 4000000
     expected_annual_cost = expected_monthly_cost * 12
 
-    assert dept.total_annual_cost == expected_annual_cost
+    assert dept.annual_cost == expected_annual_cost
 
 
 def test_empty_department():
@@ -67,5 +67,5 @@ def test_empty_department():
     dept = Department("빈 부서", [])
 
     assert dept.head_count == 0
-    assert dept.total_monthly_cost == 0
-    assert dept.total_annual_cost == 0
+    assert dept.monthly_cost == 0
+    assert dept.annual_cost == 0
