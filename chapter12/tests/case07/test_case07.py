@@ -2,6 +2,7 @@ from chapter12.src.case07.case07 import (
     Person,
     Male,
     Female,
+    load_from_input,
 )
 
 
@@ -40,20 +41,6 @@ def test_polymorphism():
 
     for person, expected_code in zip(people, expected_codes):
         assert person.gender_code == expected_code
-
-
-def load_from_input(data):
-    """데이터 리스트에서 Person 객체 리스트를 생성합니다."""
-    result = []
-    for record in data:
-        if record.get("gender") == "M":
-            p = Male(record["name"])
-        elif record.get("gender") == "F":
-            p = Female(record["name"])
-        else:
-            p = Person(record["name"])
-        result.append(p)
-    return result
 
 
 def test_load_from_input():
