@@ -6,6 +6,10 @@ class Party:
     def name(self):
         return self._name
 
+    @property
+    def annual_cost(self):
+        return self.monthly_cost * 12
+
 
 class Employee(Party):
     def __init__(self, name, employee_id, monthly_cost):
@@ -21,10 +25,6 @@ class Employee(Party):
     @property
     def employee_id(self):
         return self._employee_id
-
-    @property
-    def annual_cost(self):
-        return self.monthly_cost * 12
 
 
 class Department(Party):
@@ -44,7 +44,3 @@ class Department(Party):
     @property
     def head_count(self):
         return len(self.staff)
-
-    @property
-    def annual_cost(self):
-        return self.monthly_cost * 12
