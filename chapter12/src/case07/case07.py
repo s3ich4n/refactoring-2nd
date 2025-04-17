@@ -23,6 +23,10 @@ class Person:
     def create_person(cls, name):
         return cls(name)
 
+    @staticmethod
+    def is_male(other):
+        return isinstance(other, Male)
+
 
 class Male(Person):
     @property
@@ -47,7 +51,10 @@ class Female(Person):
 def load_from_input(data):
     """데이터 리스트에서 Person 객체 리스트를 생성합니다."""
     result = []
+    number_of_males = 0
     for record in data:
+        if record.is_male():
+            number_of_males += 1
         result.append(create_person(record))
     return result
 
