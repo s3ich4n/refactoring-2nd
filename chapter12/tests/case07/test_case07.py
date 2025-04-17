@@ -40,3 +40,36 @@ def test_polymorphism():
 
     for person, expected_code in zip(people, expected_codes):
         assert person.gender_code == expected_code
+
+
+def load_from_input(data):
+    """데이터 리스트에서 Person 객체 리스트를 생성합니다."""
+    result = []
+    for record in data:
+        if record.get("gender") == "M":
+            p = Male(record["name"])
+        elif record.get("gender") == "F":
+            p = Female(record["name"])
+        else:
+            p = Person(record["name"])
+        result.append(p)
+    return result
+
+
+def test_load_from_input():
+    # 원본 로드 함수 테스트
+    test_data = [
+        {"name": "김철수", "gender": "M"},
+        {"name": "이영희", "gender": "F"},
+        {"name": "무명", "gender": None},
+    ]
+
+    people = load_from_input(test_data)
+
+    assert len(people) == 3
+    assert isinstance(people[0], Male)
+    assert isinstance(people[1], Female)
+    assert isinstance(people[2], Person)
+    assert people[0].name == "김철수"
+    assert people[1].name == "이영희"
+    assert people[2].name == "무명"
