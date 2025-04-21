@@ -29,8 +29,6 @@ def get_value_for_period(period_number):
 
 ## 절차
 
-`<br />`, `→` 복사해서 쓰기
-
 1. 예외를 유발하는 상황을 검사할 수 있는 조건문을 만든다. `catch` 블록의 코드를 조건문의 조건절 중 하나로 옮기고, 남은 try 블록의 코드를 다른 조건절로 옮긴다.
 2. `catch` 블록에 assertion을 추가하고 테스트한다
 3. try 문과 catch 블록을 제거한다
