@@ -1,4 +1,8 @@
-from chapter12.src.case03.case03 import Party, Employee, Department
+from chapter12.src.case03.case03_1 import (
+    Party,
+    Employee,
+    Department,
+)
 
 
 class TestCase03:
