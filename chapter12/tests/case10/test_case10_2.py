@@ -1,10 +1,10 @@
 import pytest
+
 from chapter12.src.case10.case10_2 import (
     BirdData,
     Bird,
-    EuropeanSwallow,
     AfricanSwallow,
-    NorwegianBlueParrot
+    NorwegianBlueParrot,
 )
 
 
@@ -26,31 +26,20 @@ def african_swallow_data():
 @pytest.fixture
 def norwegian_blue_parrot_data_low_voltage():
     return BirdData(
-        name="Norwegian Blue",
-        plumage="pretty",
-        voltage=90,
-        is_nailed=False
+        name="Norwegian Blue", plumage="pretty", voltage=90, is_nailed=False
     )
 
 
 @pytest.fixture
 def norwegian_blue_parrot_data_high_voltage():
     return BirdData(
-        name="Norwegian Blue",
-        plumage="pretty",
-        voltage=120,
-        is_nailed=False
+        name="Norwegian Blue", plumage="pretty", voltage=120, is_nailed=False
     )
 
 
 @pytest.fixture
 def norwegian_blue_parrot_data_nailed():
-    return BirdData(
-        name="Norwegian Blue",
-        plumage="pretty",
-        voltage=50,
-        is_nailed=True
-    )
+    return BirdData(name="Norwegian Blue", plumage="pretty", voltage=50, is_nailed=True)
 
 
 # 기본 Bird 클래스 테스트
@@ -68,7 +57,7 @@ def test_bird_with_no_plumage():
 
 # European Swallow 테스트
 def test_european_swallow(european_swallow_data):
-    swallow = EuropeanSwallow(european_swallow_data)
+    swallow = Bird(european_swallow_data)
     assert swallow.name == "European Swallow"
     assert swallow.plumage == "sleek"
     assert swallow.air_speed_velocity == 35
