@@ -15,7 +15,7 @@
 - [x] Chapter 09
 - [x] Chapter 10
 - [x] Chapter 11
-- [ ] Chapter 12
+- [x] Chapter 12
 
 # Preface
 
