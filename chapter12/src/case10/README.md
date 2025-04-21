@@ -1,0 +1,105 @@
+# 12.10 서브클래스를 위임으로 바꾸기
+
+_Replace Subclass with Delegate_
+
+## 개요
+
+Before
+
+```python
+class Order:
+    def __init__(self, warehouse):
+        self._warehouse = warehouse
+    
+    @property
+    def days_to_ship(self):
+        return self._warehouse.days_to_ship
+
+
+class PriorityOrder(Order):
+    def __init__(self, warehouse, priority_plan):
+        super().__init__(warehouse)
+        self._priority_plan = priority_plan
+    
+    @property
+    def days_to_ship(self):
+        return self._priority_plan.days_to_ship
+```
+
+After
+
+```python
+class Order:
+    def __init__(self, warehouse, priority_delegate=None):
+        self._warehouse = warehouse
+        self._priority_delegate = priority_delegate
+    
+    @property
+    def days_to_ship(self):
+        if self._priority_delegate:
+            return self._priority_delegate.days_to_ship
+        return self._warehouse.days_to_ship
+
+
+class PriorityOrderDelegate:
+    def __init__(self, priority_plan):
+        self._priority_plan = priority_plan
+    
+    @property
+    def days_to_ship(self):
+        return self._priority_plan.days_to_ship
+```
+
+## 배경
+
+속한 갈래에 따라 동작이 달라지는 객체는 상속으로 표현하는게 자연스럽다. 공통 데이터와 동작은 슈퍼클래스에, 서브클래스는 오버라이딩을 한다.
+
+상속은 단점이 있다. 가장 명확한 단점은 한 번만 쓸 수 있는 카드라는 것이다.
+무언가가 달라져야 하는 이유가 여러 개여도 상속에서는 그중 단 하나의 이유만 선택해 기준으로 삼을 수 밖에 없다.
+예를들어 "사람"이란 객체의 동작을 '나이대', '소득 수준'에 따라 달리 하고싶다면 서브클래스는 '젊은이', '어르신'이 되거나, '부자', '서민'이 되어야 한다. 둘 다는 안 된다.
+
+다음 단점은 클래스 간의 관계를 매우 긴밀하게 결합한다.
+부모의 변경은 자식 모두에 영향이 간다. 따라서 자식들이 어떻게 상속해서 쓰는지 이해해야 한다.
+부모와 자식이 서로 다른 모듈에 속하거나 다른 팀에서 구현한다면 문제는 더 커진다.
+
+위임(_delegate_)은 이 모든 문제를 해결해준다. 다양한 클래스에 서로 다른 이유로 위임할 수 있다.
+위임은 객체 간의 일반적 관계이므로 상호작용에 필요한 인터페이스를 명확히 정의할 수 있다. 즉, 상속보다 결합도가 매우 약하다.
+이런 이유로 서브클래싱(상속) 문제에 직면하면 서브클래스를 위임으로 바꾼다.
+
+GoF 책에도 보면 "구현 상속(_inheritance_) 보다는 (인터페이스 상속을 기반으로한) 객체 조합(_composition_)을 선호하라"[^1] 라는 말이 나온다.
+composition은 사실상 위임과 같은 말이다. 상속은 안 좋은 것이 아니다. 필요하면 상속으로 관계를 풀면 되고, 나중에라도 필요하면 바꾸면 된다.
+마틴 파울러도 상속으로 접근 후, 문제가 발생하면 그때 위임으로 바꾼다.
+과용에 대한 반작용을 경고하는 것이지, "쓰지 마라"라고 오해하면 안 된다.
+
+GoF의 디자인패턴을 본 적이 있다면 이 리팩터링을 서브클래스를 STATE 나 STRATEGY 로 대체 한다 정도로 이해하면 된다.
+구조적으로도 호스트 위임 방식을 이용해 계층 구조를 분리해준다.
+서브클래스를 위임으로 바꾸는 모든 경우에서 위임을 계층 구조로 설계해야하는 건 아니다.
+하지만 STATE, STRATEGY에 계층 구조를 적용하면 유용할 때가 많다.
+
+## 절차
+
+`<br />`, `→` 복사해서 쓰기
+
+1. 생성자를 호출하는 곳이 많다면 생성자를 팩토리 함수로 바꾼다(11.8절)
+2. 위임으로 활용할 빈 클래스를 만든다. 이 클래스의 생성자는 서브클래스에 특화된 데이터를 전부 받아야 하며, 보통은 슈퍼클래스를 가리키는 역참조(_back reference_)도 필요하다
+3. 위임을 저장할 필드를 슈퍼 클래스에 추가한다.
+4. 서브클래스 생성 코드를 수정하여 위임 인스턴스를 생성하고 위임 필드에 대입해 초기화한다 <br />
+→ 이 작업은 팩토리 함수가 수행한다. 아니면 생성자가 정확한 위임 인스턴스를 생성할 수 있는 게 확실하다면 생성자에서 수행할 수도 있다
+5. 서브클래스의 메소드 중 위임 클래스로 이동할 것을 고른다
+6. 함수 옮기기(8.1절)를 적용해 위임 클래스로 옮긴다. 원래 메소드에서 위임하는 코드는 지우지 않는다 <br />
+→ 이 메소드가 사용하는 원소 중 위임으로 옮겨야 하는 게 있다면 함께 옮긴다. 슈퍼클래스에 유지해야 할 원소를 참조한다면 슈퍼클래스를 참조하는 필드를 위임에 추가한다
+7. 서브클래스 외부에도 원래 메소드를 호출하는 코드가 있다면 서브클래스의 위임 코드를 슈퍼클래스로 옮긴다. 이 때 위임이 존재하는지를 검사하는 보호코드로 감싸야 한다. 호출하는 외부 코드가 없다면 원래 메소드는 죽은 코드가 되므로 제거한다(8.9절)
+→ 서브클래스가 둘 이상이소 서브클래스들에서 중복이 생겨나기 시작했다면 슈퍼클래스로 추출(12.8절)한다. 이렇게 해서 기본 동작이 위임 슈퍼클래스로 옮겨졌다면 슈퍼클래스의 위임 메소드들에는 보호 코드가 필요없다
+8. 테스트한다
+9. 서브클래스의 모든 메소드가 옮겨질 때 까지 5~8을 반복한다
+10. 서브클래스들의 생성자를 호출하는 코드를 찾아서 슈퍼클래스의 생성자들을 사용하도록 수정한다
+11. 테스트한다
+12. 서브클래스를 삭제한다(죽은 코드 제거하기, 8.9절)
+
+## 예시
+
+### 서브클래스가 하나일 때
+
+'극'을 예약하는 서비스를 만든다 치자.
+
+[^1]: _Favor Object Composition over Class Inheritance._ 이 글도 읽어보면 좋다. [잘못 알려진 디자인 패턴의 두번째 원칙](https://architecture101.blog/2009/02/18/misconception_of_gof_dp/)
