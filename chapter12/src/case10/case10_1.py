@@ -55,17 +55,14 @@ class Booking:
             else result
         )
 
+    def has_dinner(self):
+        if self._premium_delegate is None:
+            raise AttributeError("premium delegate is not set")
+
+        return self._premium_delegate.has_dinner()
+
     def _be_premium(self, extras):
         self._premium_delegate = PremiumBookingDelegate(self, extras)
-
-
-class PremiumBooking(Booking):
-    def __init__(self, show, date, extras):
-        super().__init__(show, date)
-        self._extras = extras
-
-    def has_dinner(self):
-        return self._extras.has_own_property("dinner") and not self.is_peakday()
 
 
 # 팩토리 함수
@@ -74,7 +71,7 @@ def create_booking(show, date):
 
 
 def create_premium_booking(show, date, extras):
-    result = PremiumBooking(show, date, extras)
+    result = Booking(show, date)
     result._be_premium(extras)
     return result
 
@@ -91,3 +88,6 @@ class PremiumBookingDelegate:
 
     def extend_base_price(self, base):
         return round(base + self._extras.premium_fee)
+
+    def has_dinner(self):
+        return self._extras.has_own_property("dinner") and not self._host.is_peakday()
