@@ -18,13 +18,17 @@ class Bird:
 
     def select_species_delegate(self, data):
         if data.name == "European Swallow":
-            return EuropianSwallowDelegate()
+            return EuropianSwallowDelegate(data, self)
         elif data.name == "African Swallow":
-            return AfricanSwallowDelegate(data)
-        elif data.name == "Norwegian Blue Parrot":
+            return AfricanSwallowDelegate(data, self)
+        elif data.name == "Norwegian Blue":
             return NorwegianBlueParrotDelegate(data, self)
         else:
-            return None
+            return SpeciesDelegate(data, self)
+
+    @classmethod
+    def create(cls, data):
+        return cls(data)
 
     @property
     def name(self):
@@ -72,8 +76,8 @@ class EuropianSwallowDelegate(SpeciesDelegate):
 
 
 class AfricanSwallowDelegate(SpeciesDelegate):
-    def __init__(self, data):
-        super().__init__(data)
+    def __init__(self, data, bird):
+        super().__init__(data, bird)
         self._number_of_coconuts = data.number_of_coconuts
 
     @property
