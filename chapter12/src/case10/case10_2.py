@@ -32,16 +32,26 @@ class Bird:
 
     @property
     def plumage(self):
-        # if isinstance(self, NorwegianBlueParrot): 은 클래스 종류를 콕 집어서 검사하기 때문에 BAD
-        if self._species_delegate:
-            return self._species_delegate.plumage
-        return self._plumage or "average"
+        return self._species_delegate.plumage
 
     @property
     def air_speed_velocity(self):
-        return (
-            self._species_delegate.air_speed_velocity if self._species_delegate else 0
-        )
+        return self._species_delegate.air_speed_velocity
+
+
+class SpeciesDelegate:
+    """이러면 - 뭐가 위임되었고 뭐가 남겨졌는지 파악하기 쉽다!"""
+
+    def __init__(self, data, bird):
+        self._bird = bird
+
+    @property
+    def plumage(self):
+        return self._bird._plumage or "average"
+
+    @property
+    def air_speed_velocity(self):
+        return None
 
 
 class NorwegianBlueParrot(Bird):
@@ -55,14 +65,15 @@ class NorwegianBlueParrot(Bird):
         return self._species_delegate.plumage
 
 
-class EuropianSwallowDelegate:
+class EuropianSwallowDelegate(SpeciesDelegate):
     @property
     def air_speed_velocity(self):
         return 35
 
 
-class AfricanSwallowDelegate:
+class AfricanSwallowDelegate(SpeciesDelegate):
     def __init__(self, data):
+        super().__init__(data)
         self._number_of_coconuts = data.number_of_coconuts
 
     @property
@@ -70,9 +81,9 @@ class AfricanSwallowDelegate:
         return 40 - 2 * self._number_of_coconuts
 
 
-class NorwegianBlueParrotDelegate:
+class NorwegianBlueParrotDelegate(SpeciesDelegate):
     def __init__(self, data, bird):
-        self._bird = bird
+        super().__init__(data, bird)
         self._voltage = data.voltage
         self._is_nailed = data.is_nailed
 
