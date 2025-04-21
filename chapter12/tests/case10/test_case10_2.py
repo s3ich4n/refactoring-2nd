@@ -3,7 +3,6 @@ import pytest
 from chapter12.src.case10.case10_2 import (
     BirdData,
     Bird,
-    AfricanSwallow,
     NorwegianBlueParrot,
 )
 
@@ -19,8 +18,18 @@ def european_swallow_data():
 
 
 @pytest.fixture
-def african_swallow_data():
-    return BirdData(name="African Swallow", plumage="colorful")
+def african_swallow_data_no_coconuts():
+    return BirdData(name="African Swallow", plumage="colorful", number_of_coconuts=0)
+
+
+@pytest.fixture
+def african_swallow_data_with_coconuts():
+    return BirdData(name="African Swallow", plumage="colorful", number_of_coconuts=3)
+
+
+@pytest.fixture
+def african_swallow_data_max_coconuts():
+    return BirdData(name="African Swallow", plumage="colorful", number_of_coconuts=20)
 
 
 @pytest.fixture
@@ -64,20 +73,20 @@ def test_european_swallow(european_swallow_data):
 
 
 # African Swallow 테스트
-def test_african_swallow_no_coconuts(african_swallow_data):
-    swallow = AfricanSwallow(african_swallow_data, 0)
+def test_african_swallow_no_coconuts(african_swallow_data_no_coconuts):
+    swallow = Bird(african_swallow_data_no_coconuts)
     assert swallow.name == "African Swallow"
     assert swallow.plumage == "colorful"
     assert swallow.air_speed_velocity == 40  # 40 - 2 * 0
 
 
-def test_african_swallow_with_coconuts(african_swallow_data):
-    swallow = AfricanSwallow(african_swallow_data, 3)
+def test_african_swallow_with_coconuts(african_swallow_data_with_coconuts):
+    swallow = Bird(african_swallow_data_with_coconuts)
     assert swallow.air_speed_velocity == 34  # 40 - 2 * 3
 
 
-def test_african_swallow_max_coconuts(african_swallow_data):
-    swallow = AfricanSwallow(african_swallow_data, 20)
+def test_african_swallow_max_coconuts(african_swallow_data_max_coconuts):
+    swallow = Bird(african_swallow_data_max_coconuts)
     assert swallow.air_speed_velocity == 0  # 40 - 2 * 20
 
 

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class BirdData:
     name: str
     plumage: str
+    number_of_coconuts: int = 0
     voltage: float = 0
     is_nailed: bool = False
 
@@ -18,6 +19,8 @@ class Bird:
     def select_species_delegate(self, data):
         if data.name == "European Swallow":
             return EuropianSwallowDelegate()
+        elif data.name == "African Swallow":
+            return AfricanSwallowDelegate(data)
         else:
             return None
 
@@ -34,16 +37,6 @@ class Bird:
         return (
             self._species_delegate.air_speed_velocity if self._species_delegate else 0
         )
-
-
-class AfricanSwallow(Bird):
-    def __init__(self, data, number_of_coconuts):
-        super().__init__(data)
-        self._number_of_coconuts = number_of_coconuts
-
-    @property
-    def air_speed_velocity(self):
-        return 40 - 2 * self._number_of_coconuts
 
 
 class NorwegianBlueParrot(Bird):
@@ -71,3 +64,12 @@ class EuropianSwallowDelegate:
     @property
     def air_speed_velocity(self):
         return 35
+
+
+class AfricanSwallowDelegate:
+    def __init__(self, data):
+        self._number_of_coconuts = data.number_of_coconuts
+
+    @property
+    def air_speed_velocity(self):
+        return 40 - 2 * self._number_of_coconuts
