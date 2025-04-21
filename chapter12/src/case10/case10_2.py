@@ -21,6 +21,8 @@ class Bird:
             return EuropianSwallowDelegate()
         elif data.name == "African Swallow":
             return AfricanSwallowDelegate(data)
+        elif data.name == "Norwegian Blue Parrot":
+            return NorwegianBlueParrotDelegate(data, self)
         else:
             return None
 
@@ -30,6 +32,9 @@ class Bird:
 
     @property
     def plumage(self):
+        # if isinstance(self, NorwegianBlueParrot): 은 클래스 종류를 콕 집어서 검사하기 때문에 BAD
+        if self._species_delegate:
+            return self._species_delegate.plumage
         return self._plumage or "average"
 
     @property
@@ -47,17 +52,7 @@ class NorwegianBlueParrot(Bird):
 
     @property
     def plumage(self):
-        if self._voltage > 100:
-            return "scorched"
-        else:
-            return "beautiful"
-
-    @property
-    def air_speed_velocity(self):
-        if self._is_nailed:
-            return 0
-        else:
-            return 10 + self._voltage / 10
+        return self._species_delegate.plumage
 
 
 class EuropianSwallowDelegate:
@@ -73,3 +68,24 @@ class AfricanSwallowDelegate:
     @property
     def air_speed_velocity(self):
         return 40 - 2 * self._number_of_coconuts
+
+
+class NorwegianBlueParrotDelegate:
+    def __init__(self, data, bird):
+        self._bird = bird
+        self._voltage = data.voltage
+        self._is_nailed = data.is_nailed
+
+    @property
+    def air_speed_velocity(self):
+        if self._is_nailed:
+            return 0
+        else:
+            return 10 + self._voltage / 10
+
+    @property
+    def plumage(self):
+        if self._voltage > 100:
+            return "scorched"
+        else:
+            return self._bird._plumage or "beautiful"

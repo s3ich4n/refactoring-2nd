@@ -129,6 +129,10 @@ GoF의 디자인패턴을 본 적이 있다면 이 리팩터링을 서브클래�
 
 - `EuropianSwallowDelegate` 처럼 쉬운거부터 하자.
 - 어디서 위임필드를 초기화할지 정한다. 생성자가 받는 유일한 인수인 `data`에 필요정보가 모두 담겨져있으니 이 예시에선 생성자에서 처리한다. 위임을 여러개 만들어야하므로 타입코드 기반으로 올바른 위임을 선택하는 메소드도 만든다.
-
+    - `data` 로 위임을 바로 할 수 있으니, 타입도 바로 체크해줄 수 있다.
+    - 그걸 토대로 delegate 클래스에서 바로바로 처리가 가능하다.
+- `AfricanSwallowDelegate` 도 쉬우니까 바로 넘어간다.
+- `NorwegianBlueParrot` 의 경우, `plumage` 를 상속하고 있다
+    - 이것도 단순히 `Bird`로 향하는 역참조만 추가해주면 쉽다.
 
 [^1]: _Favor Object Composition over Class Inheritance._ 이 글도 읽어보면 좋다. [잘못 알려진 디자인 패턴의 두번째 원칙](https://architecture101.blog/2009/02/18/misconception_of_gof_dp/)
