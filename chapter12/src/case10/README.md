@@ -134,5 +134,12 @@ GoF의 디자인패턴을 본 적이 있다면 이 리팩터링을 서브클래�
 - `AfricanSwallowDelegate` 도 쉬우니까 바로 넘어간다.
 - `NorwegianBlueParrot` 의 경우, `plumage` 를 상속하고 있다
     - 이것도 단순히 `Bird`로 향하는 역참조만 추가해주면 쉽다.
+    - 그러면 `SpeciesDelegate` 이라는 공통의 역참조 클래스를 꺼내서 여기다가 상속을 시키면 `plumage` 가 "다 들어있음"이 보장이된다.
+
+이 코드의 장점은:
+1. 위임으로 옮겨진 종 계층구조는 더 엄격하게 종만 관련된 내용만 다루게된다.
+2. 위임 클래스에는 종에 따라 달라지는 데이터만 관리한다
+3. 그와 상관없는 공통코드는 `Bird` 자체와 다른 서브클래스에 남는다.
+
 
 [^1]: _Favor Object Composition over Class Inheritance._ 이 글도 읽어보면 좋다. [잘못 알려진 디자인 패턴의 두번째 원칙](https://architecture101.blog/2009/02/18/misconception_of_gof_dp/)
