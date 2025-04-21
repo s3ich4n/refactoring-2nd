@@ -13,6 +13,13 @@ class Bird:
     def __init__(self, data):
         self._name = data.name
         self._plumage = data.plumage
+        self._species_delegate = self.select_species_delegate(data)
+
+    def select_species_delegate(self, data):
+        if data.name == "European Swallow":
+            return EuropianSwallowDelegate()
+        else:
+            return None
 
     @property
     def name(self):
@@ -22,11 +29,17 @@ class Bird:
     def plumage(self):
         return self._plumage or "average"
 
+    @property
+    def air_speed_velocity(self):
+        return (
+            self._species_delegate.air_speed_velocity if self._species_delegate else 0
+        )
+
 
 class EuropeanSwallow(Bird):
     @property
     def air_speed_velocity(self):
-        return 35
+        return self._species_delegate.air_speed_velocity
 
 
 class AfricanSwallow(Bird):
@@ -58,3 +71,9 @@ class NorwegianBlueParrot(Bird):
             return 0
         else:
             return 10 + self._voltage / 10
+
+
+class EuropianSwallowDelegate:
+    @property
+    def air_speed_velocity(self):
+        return 35
