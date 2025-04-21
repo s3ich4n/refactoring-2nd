@@ -36,12 +36,6 @@ class Bird:
         )
 
 
-class EuropeanSwallow(Bird):
-    @property
-    def air_speed_velocity(self):
-        return self._species_delegate.air_speed_velocity
-
-
 class AfricanSwallow(Bird):
     def __init__(self, data, number_of_coconuts):
         super().__init__(data)
