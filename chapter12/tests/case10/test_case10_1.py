@@ -69,6 +69,23 @@ def test_regular_booking_has_talkback(
     assert weekend_booking.has_talk_back() is False
 
 
+def test_regular_booking_has_not_dinner(
+    show_with_talkback,
+    show_without_talkback,
+    weekday,
+    weekend,
+):
+    # 주중 예약, 톡백 있음 -> 에러 발생
+    # 주말 예약, 톡백 있음 -> 에러 발생
+    weekday_booking = create_booking(show_with_talkback, weekday)
+    weekend_booking = create_booking(show_without_talkback, weekend)
+    with pytest.raises(AttributeError):
+        weekday_booking.has_dinner()
+
+    with pytest.raises(AttributeError):
+        weekend_booking.has_dinner()
+
+
 # 프리미엄 예약 테스트
 def test_premium_booking_base_price(
     show_with_talkback,
