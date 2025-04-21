@@ -16,10 +16,21 @@ class CatalogItem:
         return arg in self._tags
 
 
-class Scroll(CatalogItem):
+class Scroll:
     def __init__(self, item_id, title, tags, date_last_cleaned):
-        super().__init__(item_id, title, tags)
+        self._catalog_item = CatalogItem(item_id, title, tags)
         self._last_cleaned = date_last_cleaned
+
+    @property
+    def item_id(self):
+        return self._catalog_item.item_id
+
+    @property
+    def title(self):
+        return self._catalog_item.title
+
+    def has_tag(self, arg):
+        return self._catalog_item.has_tag(arg)
 
     def needs_cleaning(self, target_date):
         threshold = 700 if self.has_tag("revered") else 1500
