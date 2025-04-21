@@ -46,17 +46,14 @@ class Booking:
         )
 
     def base_price(self):
-        return (
-            self._premium_delegate.base_price()
-            if self._premium_delegate is not None
-            else self._private_base_price()
-        )
-
-    def _private_base_price(self):
         result = self._show.price
         if self.is_peakday():
             result += round(result * 0.15)
-        return result
+        return (
+            self._premium_delegate.extend_base_price(result)
+            if self._premium_delegate is not None
+            else result
+        )
 
     def _be_premium(self, extras):
         self._premium_delegate = PremiumBookingDelegate(self, extras)
@@ -92,5 +89,5 @@ class PremiumBookingDelegate:
         """(성수기와 무관) 관객과의 대화시간이 있나 점검"""
         return self._host._show.has_own_property("talkback")
 
-    def base_price(self):
-        return round(self._host._private_base_price() + self._extras.premium_fee)
+    def extend_base_price(self, base):
+        return round(base + self._extras.premium_fee)
