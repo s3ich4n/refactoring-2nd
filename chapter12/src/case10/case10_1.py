@@ -61,3 +61,11 @@ class PremiumBooking(Booking):
 
     def has_dinner(self):
         return self._extras.has_own_property("dinner") and not self.is_peakday()
+
+
+def create_booking(show, date):
+    return Booking(show, date)
+
+
+def create_premium_booking(show, date, extras):
+    return PremiumBooking(show, date, extras)
