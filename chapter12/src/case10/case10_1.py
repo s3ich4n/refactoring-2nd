@@ -69,3 +69,10 @@ def create_booking(show, date):
 
 def create_premium_booking(show, date, extras):
     return PremiumBooking(show, date, extras)
+
+
+class PremiumBookingDelegate:
+    def __init__(self, host_booking, extras):
+        """예약객체로 향하는 역참조(back-reference)를 매개변수로 받음"""
+        self._host = host_booking
+        self._extras = extras
