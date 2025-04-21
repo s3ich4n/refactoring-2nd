@@ -36,7 +36,11 @@ def weekend():
 
 
 # 일반 예약 테스트
-def test_regular_booking_base_price(show_with_talkback, weekday, weekend):
+def test_regular_booking_base_price(
+    show_with_talkback,
+    weekday,
+    weekend,
+):
     # 주중 예약
     weekday_booking = create_booking(show_with_talkback, weekday)
     assert weekday_booking.base_price() == 100
@@ -47,7 +51,10 @@ def test_regular_booking_base_price(show_with_talkback, weekday, weekend):
 
 
 def test_regular_booking_has_talkback(
-    show_with_talkback, show_without_talkback, weekday, weekend
+    show_with_talkback,
+    show_without_talkback,
+    weekday,
+    weekend,
 ):
     # 주중 예약, 톡백 있음
     weekday_booking = create_booking(show_with_talkback, weekday)
@@ -64,23 +71,34 @@ def test_regular_booking_has_talkback(
 
 # 프리미엄 예약 테스트
 def test_premium_booking_base_price(
-    show_with_talkback, weekday, weekend, extras_with_dinner
+    show_with_talkback,
+    weekday,
+    weekend,
+    extras_with_dinner,
 ):
     # 주중 프리미엄 예약
     weekday_premium = create_premium_booking(
-        show_with_talkback, weekday, extras_with_dinner
+        show_with_talkback,
+        weekday,
+        extras_with_dinner,
     )
     assert weekday_premium.base_price() == 150  # 100 + 50 프리미엄 요금
 
     # 주말(성수기) 프리미엄 예약
     weekend_premium = create_premium_booking(
-        show_with_talkback, weekend, extras_with_dinner
+        show_with_talkback,
+        weekend,
+        extras_with_dinner,
     )
     assert weekend_premium.base_price() == 165  # 115 + 50 프리미엄 요금
 
 
 def test_premium_booking_has_talkback(
-    show_with_talkback, show_without_talkback, weekday, weekend, extras_with_dinner
+    show_with_talkback,
+    show_without_talkback,
+    weekday,
+    weekend,
+    extras_with_dinner,
 ):
     # 주중 프리미엄 예약, 톡백 있음
     weekday_premium = create_premium_booking(

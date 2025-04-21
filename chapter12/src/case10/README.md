@@ -114,6 +114,7 @@ GoF의 디자인패턴을 본 적이 있다면 이 리팩터링을 서브클래�
 
 그런 변화가 예상되면 서브클래스를 위임으로 바꾸는 편이 좋다.
 
-1. 생성자를 팩토리 메소드로 바꿔서 생성자 호출부분을 캡슐화한다. 
+1. 생성자를 팩토리 메소드로 바꿔서 생성자 호출부분을 캡슐화한다. 그리고 delegation용 클래스도 만든다.
+2. 이 위임을 예약객체와 연결한다. 팩토리 함수를 바꿔서 Booking이 delegate를 포함하게 만든다. 
 
 [^1]: _Favor Object Composition over Class Inheritance._ 이 글도 읽어보면 좋다. [잘못 알려진 디자인 패턴의 두번째 원칙](https://architecture101.blog/2009/02/18/misconception_of_gof_dp/)
