@@ -1,4 +1,4 @@
-from chapter08.src.case01.case01 import track_summary
+from chapter08.src.case01.case01_1 import track_summary
 
 
 def test_track_summary_calculation():
