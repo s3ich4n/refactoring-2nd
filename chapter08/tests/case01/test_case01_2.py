@@ -47,9 +47,8 @@ def test_bank_charge_with_overdraft_premium_within_limit(premium_account_within_
 
 def test_bank_charge_with_overdraft_premium_beyond_limit(premium_account_beyond_limit):
     # 7일 초과 인출이 있는 프리미엄 계좌
-    expected = (
-        4.5 + 10 + (10 - 7) * 0.85
-    )  # 기본 요금 + 프리미엄 초과 인출 기본 요금 + 추가 일수 요금
+    #   기본 요금 + 프리미엄 초과 인출 기본 요금 + 추가 일수 요금
+    expected = 4.5 + 10 + (10 - 7) * 0.85
     assert premium_account_beyond_limit.bank_charge == expected
 
 
