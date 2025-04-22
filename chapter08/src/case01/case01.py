@@ -1,13 +1,7 @@
 import math
 
 
-def track_summary(points):
-    def calculate_distance():
-        result = 0
-        for i in range(1, len(points)):
-            result += distance(points[i - 1], points[i])
-        return result
-
+def top_calculate_distance(points):
     def distance(p1, p2):
         # 두 지점 간의 거리를 계산 (하버사인 공식 사용)
         EARTH_RADIUS = 3959  # 마일 단위
@@ -22,6 +16,16 @@ def track_summary(points):
     def radians(degrees):
         # 각도를 라디안으로 변환
         return degrees * math.pi / 180
+
+    result = 0
+    for i in range(1, len(points)):
+        result += distance(points[i - 1], points[i])
+    return result
+
+
+def track_summary(points):
+    def calculate_distance():
+        return top_calculate_distance(points)
 
     def calculate_time():
         # 현실적인 구현을 위해 총 소요 시간을 계산하는 간단한 예시
