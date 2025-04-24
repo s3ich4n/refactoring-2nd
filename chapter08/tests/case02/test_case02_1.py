@@ -1,6 +1,6 @@
 from datetime import date
 
-from chapter08.src.case02.case02 import (
+from chapter08.src.case02.case02_1 import (
     Customer,
     date_today,
     CustomerContract,
