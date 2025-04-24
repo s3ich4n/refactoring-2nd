@@ -77,6 +77,13 @@ class Customer:
 
 ## 예시
 
+현재 예시로는 `discount_rate` 필드를 `CustomerContract` 에게 옮기는 걸 하려한다
+
+첫 과정부터 헤멨는데, initializer에서 데이터 초기화를 캡슐화 한 아이디어가 낯설었다. (c14c3982edea6e72d061d20d71d423c44c584cf4)
+
+할인율이라는 데이터가 계약(Contract)과 더 밀접하게 관련되어 있다고 판단될 때, 데이터와 그 데이터를 사용하는 메서드들을 같은 클래스로 모아서 응집도를 높일 수 있다.
+
+이것이 핵심이다.
 
 
 [^1]: 자바의 `record` 생각해도 되고, `@dataclass` 생각해도 되고, 하다못해 dictionary 같은 raw한거 생각해도 되고.
