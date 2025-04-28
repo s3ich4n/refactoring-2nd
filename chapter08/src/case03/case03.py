@@ -3,7 +3,7 @@ def render_person(out_stream, person):
     result.append(f"<p>{person['name']}</p>")
     result.append(render_photo(person["photo"]))
     result.append(f"<p>title: {person['photo']['title']}</p>")
-    result.append(zznew(person["photo"]))
+    result.append(emit_photo_data(person["photo"]))
     return "\n".join(result)
 
 
@@ -15,13 +15,13 @@ def photo_div(p):
     return "\n".join(
         [
             "<div>",
-            zznew(p),
+            emit_photo_data(p),
             "</div>",
         ]
     )
 
 
-def zznew(p):
+def emit_photo_data(p):
     return "\n".join(
         [
             f"<p>title: {p['title']}</p>",
@@ -29,10 +29,3 @@ def zznew(p):
             f"<p>date: {p['date'].strftime('%Y-%m-%d')}</p>",
         ]
     )
-
-
-# def emit_photo_data(a_photo):
-#     result = []
-#     result.append(f"<p>location: {a_photo['location']}</p>")
-#     result.append(f"<p>date: {a_photo['date'].strftime('%Y-%m-%d')}</p>")
-#     return "\n".join(result)
