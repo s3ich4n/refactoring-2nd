@@ -4,7 +4,8 @@ from chapter08.src.case03.case03 import (
     render_person,
     render_photo,
     photo_div,
-    emit_photo_data,
+    zznew,
+    # emit_photo_data,
 )
 
 
@@ -58,12 +59,17 @@ def test_photo_div():
 
 def test_emit_photo_data():
     # 테스트 데이터 설정
-    photo = {"location": "제주도", "date": datetime(2023, 12, 25)}
+    photo = {
+        "title": "개인 사진",
+        "location": "제주도",
+        "date": datetime(2023, 12, 25),
+    }
 
     # 함수 실행
-    result = emit_photo_data(photo)
+    result = zznew(photo)
 
     # 결과 검증
+    # assert "<p>title: 개인 사진</p>" in result
     assert "<p>location: 제주도</p>" in result
     assert "<p>date: 2023-12-25</p>" in result
     assert result == "<p>location: 제주도</p>\n<p>date: 2023-12-25</p>"
