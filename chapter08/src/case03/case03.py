@@ -13,7 +13,20 @@ def render_photo(photo):
 
 def photo_div(p):
     return "\n".join(
-        ["<div>", f"<p>title: {p['title']}</p>", emit_photo_data(p), "</div>"]
+        [
+            "<div>",
+            zznew(p),
+            "</div>",
+        ]
+    )
+
+
+def zznew(p):
+    return "\n".join(
+        [
+            f"<p>title: {p['title']}</p>",
+            emit_photo_data(p),
+        ]
     )
 
 
