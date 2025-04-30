@@ -28,14 +28,16 @@ def render_person(out_stream, person):
     """사람 정보를 HTML로 렌더링합니다."""
     out_stream.write(f"<p>{person.name}</p>\n")
     render_photo(out_stream, person.photo)
-    emit_photo_data(out_stream, person.photo)
+    zztmp(out_stream, person.photo)
+    out_stream.write(f"<p>location: {person.photo.location}</p>\n")  # 인라인 수행
 
 
 def list_recent_photos(out_stream, photos):
     """최근 사진 목록을 HTML로 렌더링합니다."""
     for p in [p for p in photos if p.date > recent_date_cutoff()]:
         out_stream.write("<div>\n")
-        emit_photo_data(out_stream, p)
+        zztmp(out_stream, p)
+        out_stream.write(f"<p>location: {p.location}</p>\n")  # 인라인 수행
         out_stream.write("</div>\n")
 
 
