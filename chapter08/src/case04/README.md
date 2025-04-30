@@ -48,3 +48,13 @@ out_stream.write(f"<p>location: {person.photo.location}</p>\n")
 → 더 나은 이름이 떠오르면 그걸로 바꾼다
 
 ## 예시
+
+`list_recent_photos`가 `location` 정보를 다르게 렌더해야한다고 가정하고, `emit_photo_data` 를 리팩터링 해보자.
+
+`render_person` 의 마지막 두 줄을 잘라서 호출코드 밑에 넣으면 그만인데, 정석대로 가보자.
+
+1. `location`은 인라인 시키고 다른 함수 (`zztmp`) 에 동작을 뺀 후 이름을 바꿔준다 (dfe345ee24340dcf601934d0b3491c1fd4e3a3c7)
+2. 피호출 함수를 호출자들로 한 번에 하나씩 인라인한다. 하면서 테스트한다. (255a0124954729f88d18b80a3731ccff01c1a48d)
+3. 이름을 원래대로 돌리면... (e4feab23858155f854f55c2c51e1f109ed0a05a1)
+
+끝.
