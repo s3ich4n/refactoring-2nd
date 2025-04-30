@@ -87,6 +87,6 @@ def test_emit_photo_data(sample_photo):
     result = output.getvalue()
 
     # 모든 필요한 정보가 포함되어 있는지 확인
+    #   이때, location은 요구사항에서 제외되었다고 가정
     assert f"title: {sample_photo.title}" in result
-    assert f"location: {sample_photo.location}" in result
     assert "date:" in result
