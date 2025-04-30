@@ -41,6 +41,10 @@ def list_recent_photos(out_stream, photos):
 
 def emit_photo_data(out_stream, photo):
     """사진 데이터를 HTML로 출력합니다."""
+    zztmp(out_stream, photo)
+    out_stream.write(f"<p>location: {photo.location}</p>\n")
+
+
+def zztmp(out_stream, photo):
     out_stream.write(f"<p>title: {photo.title}</p>\n")
     out_stream.write(f"<p>date: {photo.date.strftime('%a %b %d %Y')}</p>\n")
-    out_stream.write(f"<p>location: {photo.location}</p>\n")
