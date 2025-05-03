@@ -39,12 +39,12 @@ def sample_photos():
         Photo(
             "Work Trip",
             "New York",
-            datetime.now().replace(day=datetime.now().day - 10),
+            datetime.now().replace(day=datetime.now().day) - timedelta(days=10),
         ),
         Photo(
             "Old Trip",
             "Tokyo",
-            datetime.now().replace(year=datetime.now().year - 1),
+            datetime.now().replace(year=datetime.now().year) - timedelta(days=10),
         ),
     ]
 
