@@ -45,4 +45,25 @@ names = list(map(lambda i: i.name,
 
 ## 예시
 
-[^1]: https://martinfowler.com/articles/collection-pipeline/ 
+파이썬이면 리스트 컴프리헨션을 쓰는쪽이 더 익숙하다.
+
+다만 이건 자바코드를 보는 게 좋겠다:
+
+```java
+public record CityPhone(String city, String phone) {}
+
+public List<CityPhone> acquireData(String input) {
+    return Arrays.stream(input.split("\n"))
+        .skip(1)
+        .filter(line -> !line.trim().isEmpty())  
+        .map(line -> line.split(","))
+        .filter(fields -> fields[1].trim().equals("India"))
+        .map(fields -> new CityPhone(fields[0].trim(), fields[2].trim()))
+        .collect(Collectors.toList());
+}
+```
+
+반복문을 파이프라인으로 대체하는 예시는 마틴 파울러의 블로그 글[^2]도 읽어보자
+
+[^1]: https://martinfowler.com/articles/collection-pipeline/
+[^2]: https://martinfowler.com/articles/refactoring-pipelines.html
