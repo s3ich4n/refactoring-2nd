@@ -9,14 +9,19 @@ class Person:
 
 # 변환된 파이썬 코드
 def calculate_stats(people):
-    total_salary = 0
+    return f"youngestAge: {youngest_age(people)}, totalSalary: {total_salary(people)}"
 
-    for p in people:
-        total_salary += p.salary
 
+def youngest_age(people):
     youngest = people[0].age if people else float("inf")
     for p in people:
         if p.age < youngest:
             youngest = p.age
+    return youngest
 
-    return f"youngestAge: {youngest}, totalSalary: {total_salary}"
+
+def total_salary(people):
+    total_salary = 0
+    for p in people:
+        total_salary += p.salary
+    return total_salary
