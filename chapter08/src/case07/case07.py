@@ -13,15 +13,10 @@ def calculate_stats(people):
 
 
 def youngest_age(people):
-    youngest = people[0].age if people else float("inf")
-    for p in people:
-        if p.age < youngest:
-            youngest = p.age
-    return youngest
+    # Generator expression with min()
+    return min((p.age for p in people), default=float("inf"))
 
 
 def total_salary(people):
-    total_salary = 0
-    for p in people:
-        total_salary += p.salary
-    return total_salary
+    # Generator expression with sum()
+    return sum(p.salary for p in people)
