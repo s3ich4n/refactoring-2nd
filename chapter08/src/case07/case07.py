@@ -14,6 +14,8 @@ def calculate_stats(people):
     for p in people:
         if p.age < youngest:
             youngest = p.age
+
+    for p in people:
         total_salary += p.salary
 
     return f"youngestAge: {youngest}, totalSalary: {total_salary}"
