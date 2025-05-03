@@ -11,7 +11,7 @@
 - [x] Chapter 05
 - [x] Chapter 06
 - [x] Chapter 07
-- [ ] Chapter 08
+- [x] Chapter 08
 - [x] Chapter 09
 - [x] Chapter 10
 - [x] Chapter 11
